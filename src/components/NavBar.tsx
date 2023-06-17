@@ -2,7 +2,8 @@
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
-import { usePathname  } from 'next/navigation'
+
+import { usePathname } from 'next/navigation'
 
 const navigation = [
   { name: 'App', href: '/', current: true },
@@ -10,12 +11,12 @@ const navigation = [
 ]
 
 function isActiveRouteOrSubroute(pathname: string, href: string): boolean {
-    if (href === '/' && pathname !== '/') return false
-    return pathname.startsWith(href)
+  if (href === '/' && pathname !== '/') return false
+  return pathname.startsWith(href)
 }
 
 export default function NavBar() {
-    const pathname = usePathname ()
+  const pathname = usePathname()
 
   return (
     <Disclosure as='nav' className='bg-zinc-900'>
@@ -43,7 +44,10 @@ export default function NavBar() {
                         href={item.href}
                         className={clsx({
                           'bg-zinc-600 text-white': isActiveRouteOrSubroute(pathname, item.href),
-                          'text-gray-300 hover:bg-zinc-800 hover:text-white': !isActiveRouteOrSubroute(pathname, item.href),
+                          'text-gray-300 hover:bg-zinc-800 hover:text-white': !isActiveRouteOrSubroute(
+                            pathname,
+                            item.href,
+                          ),
                           'rounded-md px-3 py-2 text-sm font-medium': true,
                         })}
                         aria-current={isActiveRouteOrSubroute(pathname, item.href) ? 'page' : undefined}>
