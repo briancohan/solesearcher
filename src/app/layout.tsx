@@ -13,8 +13,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body className={`${inter.className} bg-zinc-800 text-zinc-100`}>
-        <Navbar />
-        {children}
+        <header>
+          <Navbar />
+        </header>
+        <main className="pt-8 mx-auto text-lg/7 max-w-7xl">
+          {children}
+        </main>
       </body>
     </html>
   )
