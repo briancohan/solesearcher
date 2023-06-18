@@ -32,7 +32,14 @@ export default function Home() {
       </Header>
 
       <form className='grid max-w-3xl grid-cols-2 gap-6 px-4 py-5 mx-auto sm:px-6'>
-        <Input name='Insole Length' type='number' value={insole} onChange={setInsole} stars={3} className='col-span-2' />
+        <Input
+          name='Insole Length'
+          type='number'
+          value={insole}
+          onChange={setInsole}
+          stars={3}
+          className='col-span-2'
+        />
         <Input name='Nominal Shoe Size - US' type='number' value={nominal} onChange={setNominal} stars={2} />
         <Select
           name='Footwear Classification'

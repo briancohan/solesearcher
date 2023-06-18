@@ -1,4 +1,4 @@
-import { twMerge } from "tailwind-merge"
+import { twMerge } from 'tailwind-merge'
 
 interface LabelProps extends React.HTMLAttributes<HTMLLabelElement> {
   name: string
