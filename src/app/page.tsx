@@ -32,15 +32,15 @@ export default function Home() {
       </Header>
 
       <form className='grid max-w-3xl grid-cols-2 gap-6 px-4 py-5 mx-auto sm:px-6'>
-        <Input name='Insole Length' type='number' value={insole} onChange={setInsole} className='col-span-2' />
-        <Input name='Nominal Shoe Size - US' type='number' value={nominal} onChange={setNominal} />
+        <Input name='Insole Length' type='number' value={insole} onChange={setInsole} stars={3} className='col-span-2' />
+        <Input name='Nominal Shoe Size - US' type='number' value={nominal} onChange={setNominal} stars={2} />
         <Select
           name='Footwear Classification'
           options={classifications}
           value={classification}
           onChange={setClassification}
         />
-        <Input name='Subject Height' type='number' value={height} onChange={setHeight} />
+        <Input name='Subject Height' type='number' value={height} onChange={setHeight} stars={1} />
         <Select name='Birth Sex' options={sexes} value={sex} onChange={setSex} />
       </form>
 
