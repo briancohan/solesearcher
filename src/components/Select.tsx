@@ -31,7 +31,6 @@ interface SelectProps {
 }
 
 const Select: React.FC<SelectProps> = ({ name, options, value, onChange }) => {
-
   return (
     <Listbox value={value} onChange={onChange}>
       {({ open }) => (
