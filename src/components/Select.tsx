@@ -8,8 +8,8 @@ import Label from '@/app/server_components/Label'
 interface SelectProps {
   name: string
   options: string[]
-  value: string
-  onChange: (value: string | number) => [string | number, Dispatch<string | number>]
+  value: string | number
+  onChange: Dispatch<string | number>
 }
 
 const Select: React.FC<SelectProps> = ({ name, options, value, onChange }) => {

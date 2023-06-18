@@ -6,7 +6,7 @@ import { Dispatch, useState } from 'react'
 export default function useLocalStorage(
   key: string,
   initialValue: string | number,
-): [string, Dispatch<string | number>] {
+): [string | number, Dispatch<string | number>] {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {

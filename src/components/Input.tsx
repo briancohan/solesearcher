@@ -8,7 +8,7 @@ import BaseInput from '@/components/BaseInput'
 export interface InputProps {
   name: string
   value: string | number
-  onChange: (value: string | number) => [string | number, Dispatch<string | number>]
+  onChange: Dispatch<string | number>
   type?: string
   inline?: boolean
   className?: string

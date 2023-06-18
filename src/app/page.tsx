@@ -1,6 +1,5 @@
 'use client'
 import Header from '@/app/server_components/Header'
-import Rating from '@/app/server_components/Rating'
 import Input from '@/components/Input'
 import Select from '@/components/Select'
 import useLocalStorage from '@/lib/hooks/useLocalStorage'
@@ -11,9 +10,9 @@ const sexes = ['Male', 'Female']
 export default function Home() {
   const [insole, setInsole] = useLocalStorage('insole', 292)
   const [nominal, setNominal] = useLocalStorage('nominal', 11.5)
-  const [classification, setClassification] = useLocalStorage('classification', 'm')
+  const [classification, setClassification] = useLocalStorage('classification', classifications[0])
   const [height, setHeight] = useLocalStorage('height', 1828)
-  const [sex, setSex] = useLocalStorage('sex', 'm')
+  const [sex, setSex] = useLocalStorage('sex', sexes[0])
 
   return (
     <div>
