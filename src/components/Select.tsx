@@ -9,7 +9,7 @@ interface SelectProps {
   name: string
   options: string[]
   value: string | number
-  onChange: Dispatch<string | number>
+  onChange: Dispatch<any>
 }
 
 const Select: React.FC<SelectProps> = ({ name, options, value, onChange }) => {

@@ -6,7 +6,7 @@ interface BaseInputProps {
   name: string
   type?: string
   value: string | number
-  onChange: Dispatch<string | number>
+  onChange: Dispatch<any>
 }
 
 const BaseInput: React.FC<BaseInputProps> = ({ name, type = 'text', value = '', onChange, ...props }) => {

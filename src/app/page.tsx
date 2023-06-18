@@ -3,16 +3,26 @@ import Header from '@/app/server_components/Header'
 import Input from '@/components/Input'
 import Select from '@/components/Select'
 import useLocalStorage from '@/lib/hooks/useLocalStorage'
+import calculateMeasurements from '@/lib/calcs'
+import { useEffect, useState } from 'react'
 
-const classifications = ["Men's", "Women's", 'Youth']
-const sexes = ['Male', 'Female']
+
+const classifications: Classification[] = ["Men's", "Women's", 'Youth']
+const sexes: Sex[] = ['Male', 'Female']
 
 export default function Home() {
-  const [insole, setInsole] = useLocalStorage('insole', 292)
-  const [nominal, setNominal] = useLocalStorage('nominal', 11.5)
-  const [classification, setClassification] = useLocalStorage('classification', classifications[0])
-  const [height, setHeight] = useLocalStorage('height', 1828)
-  const [sex, setSex] = useLocalStorage('sex', sexes[0])
+  const [insole, setInsole] = useLocalStorage<number>('insole', 292)
+  const [nominal, setNominal] = useLocalStorage<number>('nominal', 11.5)
+  const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
+  const [height, setHeight] = useLocalStorage<number>('height', 1828)
+  const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
+  const [measurements, setMeasurements] = useState({})
+
+  useEffect(() => {
+    const results = calculateMeasurements(insole, nominal, classification, height, sex)
+    console.log(results)
+    setMeasurements(results)
+  },[insole, nominal, classification, height, sex])
 
   return (
     <div>
