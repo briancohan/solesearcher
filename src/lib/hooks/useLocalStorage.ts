@@ -3,10 +3,7 @@ https://usehooks.com/useLocalStorage/
 */
 import { Dispatch, useState } from 'react'
 
-export default function useLocalStorage<T>(
-  key: string,
-  initialValue: T,
-): [T, Dispatch<T>] {
+export default function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<T>] {
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {
