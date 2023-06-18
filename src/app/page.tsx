@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 
 import Header from '@/app/server_components/Header'
+import DataCard from '@/components/DataCard'
 import Input from '@/components/Input'
 import Select from '@/components/Select'
 import calculateMeasurements from '@/lib/calcs'
@@ -16,7 +17,7 @@ export default function Home() {
   const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
   const [height, setHeight] = useLocalStorage<number>('height', 1828)
   const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
-  const [measurements, setMeasurements] = useState({})
+  const [measurements, setMeasurements] = useState<Results>({ shod: {}, unshod: {}, best: 'insole' } as Results)
 
   useEffect(() => {
     const results = calculateMeasurements(insole, nominal, classification, height, sex)
@@ -42,6 +43,24 @@ export default function Home() {
         <Input name='Subject Height' type='number' value={height} onChange={setHeight} />
         <Select name='Birth Sex' options={sexes} value={sex} onChange={setSex} />
       </form>
+
+      <Header as='h2' className='text-3xl text-center'>
+        Track Lengths
+      </Header>
+      <div className='grid items-start max-w-3xl grid-cols-1 gap-5 mx-auto mt-5 sm:grid-cols-2'>
+        <DataCard
+          best={measurements.best}
+          results={measurements.shod}
+          title='Outsole Track Length'
+          icon='mingcute:shoe-line'
+        />
+        <DataCard
+          best={measurements.best}
+          results={measurements.unshod}
+          title='Barefoot Track Length'
+          icon='icon-park-outline:foot'
+        />
+      </div>
     </div>
   )
 }
