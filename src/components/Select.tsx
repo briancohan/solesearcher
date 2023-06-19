@@ -2,6 +2,7 @@ import { Dispatch, Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import clsx from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 import Label from '@/app/server_components/Label'
 
@@ -10,15 +11,17 @@ interface SelectProps {
   options: string[]
   value: string | number
   onChange: Dispatch<any>
+  hideLabel?: boolean
+  className?: string
 }
 
-const Select: React.FC<SelectProps> = ({ name, options, value, onChange }) => {
+const Select: React.FC<SelectProps> = ({ name, options, value, onChange, hideLabel = false, className }) => {
   return (
     <Listbox value={value} onChange={onChange}>
       {({ open }) => (
         <div>
-          {name && <Label name='name'>{name}</Label>}
-          <div className='relative mt-2'>
+          {name && !hideLabel && <Label name='name'>{name}</Label>}
+          <div className={twMerge('relative mt-2', className)}>
             <Listbox.Button className='relative w-full cursor-default rounded-md bg-zinc-700 py-1.5 pl-3 pr-10 text-left text-gray-100 shadow-sm ring-1 ring-inset ring-gray-500 focus:outline-none focus:ring-2 focus:ring-sole-green sm:text-sm sm:leading-6'>
               <span className='block truncate'>{value}</span>
               <span className='absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none'>
