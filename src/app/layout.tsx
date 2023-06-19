@@ -2,7 +2,6 @@ import { Inter } from 'next/font/google'
 
 import Footer from '@/app/server_components/Footer'
 import Navbar from '@/components/NavBar'
-import PWA from '@/components/PWA'
 
 import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
@@ -27,7 +26,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main className='pt-8 mx-auto text-lg/7 max-w-7xl'>{children}</main>
         <Footer />
-        <PWA />
       </body>
     </html>
   )
