@@ -11,7 +11,7 @@ interface UnitHelperProps {
 }
 
 const UnitHelper: React.FC<UnitHelperProps> = ({ className }) => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <>
