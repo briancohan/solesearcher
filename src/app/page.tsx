@@ -6,6 +6,7 @@ import DataCard from '@/components/DataCard'
 import Input from '@/components/Input'
 import InputVariable from '@/components/InputVariable'
 import Select from '@/components/Select'
+import UnitHelper from '@/components/UnitHelper'
 import calculateMeasurements from '@/lib/calcs'
 import convert from '@/lib/convert'
 import useLocalStorage from '@/lib/hooks/useLocalStorage'
@@ -40,6 +41,8 @@ export default function Home() {
       <Header as='h1' className='text-5xl text-center'>
         Sole Searcher
       </Header>
+
+      <UnitHelper className='absolute top-4 right-4' />
 
       <form className='grid max-w-3xl grid-cols-2 gap-6 px-4 py-5 mx-auto sm:px-6'>
         <InputVariable
