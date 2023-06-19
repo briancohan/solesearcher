@@ -1,5 +1,8 @@
-import Plot from 'react-plotly.js'
 import { Annotations, Config, Layout, PlotData } from 'plotly.js'
+
+import dynamic from 'next/dynamic'
+
+const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
 
 interface TrackLengthGraphProps {
   data: MeasurementResults
