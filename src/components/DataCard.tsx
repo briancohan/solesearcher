@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
+import TrackLengthGraph from '@/components/TrackLengthGraph'
 import convert from '@/lib/convert'
 import floatToFraction from '@/lib/floatToFraction'
 
@@ -66,13 +67,20 @@ const DataCard: React.FC<DataCardProps> = ({ icon, title, best, results }) => {
         <Disclosure>
           {({ open }) => (
             <>
-              <Disclosure.Panel className='text-gray-500'>Plotly results to come soon</Disclosure.Panel>
-              <Disclosure.Button className='flex items-center text-zinc-400'>
-                Show Details{' '}
+              <Disclosure.Panel className='grid text-gray-500'>
+                <TrackLengthGraph data={results} />
+              </Disclosure.Panel>
+              <Disclosure.Button className='flex items-center text-sm text-zinc-400'>
                 {open ? (
-                  <Icon icon='mdi:chevron-up' className='w-8 h-8' />
+                  <>
+                    <span>Hide Details</span>
+                    <Icon icon='mdi:chevron-up' className='w-8 h-8' />
+                  </>
                 ) : (
-                  <Icon icon='mdi:chevron-down' className='w-8 h-8' />
+                  <>
+                    <span>Show Details</span>
+                    <Icon icon='mdi:chevron-down' className='w-8 h-8' />
+                  </>
                 )}
               </Disclosure.Button>
             </>
