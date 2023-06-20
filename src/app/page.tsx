@@ -1,6 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { Icon } from '@iconify/react'
 
+import Button from '@/app/server_components/Button'
 import Header from '@/app/server_components/Header'
 import Rating from '@/app/server_components/Rating'
 import DataCard from '@/components/DataCard'
@@ -37,15 +39,29 @@ export default function Home() {
     setMeasurements(results)
   }, [insole, nominal, classification, height, sex, insoleUnit, heightUnit])
 
+  function resetForm() {
+    setInsole(0)
+    setInsoleUnit('mm')
+    setNominal(0)
+    setClassification(classifications[0])
+    setHeight(0)
+    setHeightUnit('mm')
+    setSex(sexes[0])
+  }
+
   return (
     <div>
       <Header as='h1' className='text-5xl text-center'>
         Sole Searcher
       </Header>
 
-      <UnitHelper className='absolute top-4 right-4' />
-
       <form className='flex flex-col max-w-3xl gap-6 px-4 py-5 mx-auto sm:px-6'>
+        <div className='flex justify-center gap-6'>
+          <Button onClick={resetForm}>
+            <Icon icon='carbon:reset' className='w-6 h-6' />
+          </Button>
+          <UnitHelper className='absolute top-4 right-4' />
+        </div>
         <div>
           <InputVariable
             name='insole'

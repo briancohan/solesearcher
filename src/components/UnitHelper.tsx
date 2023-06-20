@@ -2,8 +2,8 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { twMerge } from 'tailwind-merge'
 
+import Button from '@/app/server_components/Button'
 import floatToFraction from '@/lib/floatToFraction'
 
 interface UnitHelperProps {
@@ -15,11 +15,9 @@ const UnitHelper: React.FC<UnitHelperProps> = ({ className }) => {
 
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        className={twMerge('flex items-center justify-center w-12 h-12 rounded-full bg-sole-green', className)}>
-        <Icon icon='ph:ruler' className='w-6 h-6 text-white' />
-      </button>
+      <Button onClick={() => setOpen(true)}>
+        <Icon icon='ph:ruler' className='w-6 h-6' />
+      </Button>
       <Transition.Root show={open} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={setOpen}>
           <Transition.Child
