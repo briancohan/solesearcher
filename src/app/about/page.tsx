@@ -56,9 +56,9 @@ export default function About() {
       </Header>
       <p>
         Insert the leading edge of a tape measure into the footwear. Ensure the tape measure extends to the front of the
-        toe box. Hold the tape measure flat against the floor of the insole. Bend the tape at the rear edge or rise of
-        the heel. The reading at the heel is made as closely as possible to the point at which the rise (vertical slope)
-        equals the run (horizontal aspect).
+        toe box. Hold the tape measure flat against the floor of the insole. Bend the tape at the rear edge or the rise
+        of the heel. The reading at the heel is made as closely as possible to the point at which the rise (vertical
+        slope) equals the run (horizontal aspect).
       </p>
       <p>
         If possible, measure multiple items of footwear and use the average of the measurements. Ensure the proper units
@@ -79,8 +79,8 @@ export default function About() {
         Subject Height
       </Header>
       <p>
-        Indicate the subject&apos;s height. Make sure to set the correct measurement units and the subjects sex at
-        birth. (The correlations for track length are based on geneitcs rather than gender identity.)
+        Indicate the subject&apos;s height. Make sure to set the correct measurement units and the subject&apos;s sex at
+        birth. (The correlations for track length are based on genetics rather than gender identity.)
       </p>
 
       <Header as='h2' className='text-2xl'>
