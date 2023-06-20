@@ -70,7 +70,7 @@ const DataCard: React.FC<DataCardProps> = ({ icon, title, best, results }) => {
               <Disclosure.Panel className='grid text-gray-500'>
                 <TrackLengthGraph data={results} />
               </Disclosure.Panel>
-              <Disclosure.Button className='flex items-center text-sm text-zinc-400'>
+              <Disclosure.Button className='flex items-center text-sm text-zinc-300'>
                 {open ? (
                   <>
                     <span>Hide Details</span>

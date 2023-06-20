@@ -15,7 +15,7 @@ const UnitHelper: React.FC<UnitHelperProps> = ({ className }) => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>
+      <Button onClick={() => setOpen(true)} aria-label='Open Measurment Helper Modal'>
         <Icon icon='ph:ruler' className='w-6 h-6' />
       </Button>
       <Transition.Root show={open} as={Fragment}>

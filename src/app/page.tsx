@@ -57,7 +57,7 @@ export default function Home() {
 
       <form className='flex flex-col max-w-3xl gap-6 px-4 py-5 mx-auto sm:px-6'>
         <div className='flex justify-center gap-6'>
-          <Button onClick={resetForm}>
+          <Button onClick={resetForm} aria-label='Reset Form'>
             <Icon icon='carbon:reset' className='w-6 h-6' />
           </Button>
           <UnitHelper className='absolute top-4 right-4' />
