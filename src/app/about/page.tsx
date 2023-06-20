@@ -21,7 +21,7 @@ const people = [
   },
   {
     name: 'Brian Cohan',
-    role: 'UI/UX, App Development, Deployment',
+    role: 'App Development',
   },
 ]
 

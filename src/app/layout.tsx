@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header>
           <Navbar />
         </header>
-        <main className='relative p-8 mx-auto max-w-7xl'>{children}</main>
+        <main className='relative p-2 mx-auto max-w-7xl'>{children}</main>
         <Footer />
       </body>
     </html>
