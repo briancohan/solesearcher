@@ -41,7 +41,13 @@ const InputVariable: React.FC<InputVariableProps> = ({
           <label htmlFor={`${name}-unit`} className='sr-only'>
             {name} Unit
           </label>
-          <Select name={`${name}-unit`} options={units} value='mm' className='mt-0' onChange={onSelectChange} />
+          <Select
+            name={`${name}-unit`}
+            options={units}
+            value={selectValue}
+            className='w-20 mt-0'
+            onChange={onSelectChange}
+          />
         </div>
       </div>
     </div>
