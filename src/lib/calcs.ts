@@ -1,3 +1,4 @@
+import convert from './convert'
 /**
  * Main function to calculate shoe size from insole, nominal, or height
  */
@@ -134,32 +135,42 @@ function calculateShodFromnominal(nominal: number, classification: Classificatio
  * Height Calculations
  */
 function calculateShodFromHeight(height: number, sex: Sex): Measurement {
+  const { avg, lower, upper } = calculateUnshodFromHeight(height, sex)
+  const offset = 25.4
+
   return {
-    avg: calculateShodAvgFromHeight(height, sex),
-    lower: calculateShodAvgFromHeight(height, sex),
-    upper: calculateShodAvgFromHeight(height, sex),
+    avg: avg + offset,
+    lower: lower + offset,
+    upper: upper + offset,
   }
 }
 
 function calculateUnshodFromHeight(height: number, sex: Sex): Measurement {
+  const ci95 = 1.96
   return {
-    avg: calculateUnshodAvgFromHeight(height, sex),
-    lower: calculateUnshodAvgFromHeight(height, sex),
-    upper: calculateUnshodAvgFromHeight(height, sex),
+    avg: convert(calculateUnshodAvgFromHeight(height, sex, 0), 'cm', 'mm'),
+    lower: convert(calculateUnshodAvgFromHeight(height, sex, -ci95), 'cm', 'mm'),
+    upper: convert(calculateUnshodAvgFromHeight(height, sex, ci95), 'cm', 'mm'),
   }
 }
 
-function calculateShodAvgFromHeight(height: number, sex: Sex): number {
+function calculateUnshodAvgFromHeight(height: number, sex: Sex, errorFactor: number): number {
+  console.log(height)
+  const male = {
+    m: 3.447,
+    b: 82.206,
+    sigma: 4.856,
+  }
+  const female = {
+    m: 3.614,
+    b: 75.065,
+    sigma: 4.7,
+  }
+
   switch (sex) {
     case 'Male':
-      return 10 * ((height / 10 - 82) / 3.447)
-      break
+      return (height + male.sigma * errorFactor - male.b) / male.m
     case 'Female':
-      return 10 * ((height / 10 - 75) / 3.614)
-      break
+      return (height + female.sigma * errorFactor - female.b) / female.m
   }
-}
-
-function calculateUnshodAvgFromHeight(height: number, sex: Sex): number {
-  return 1.06 * calculateShodAvgFromHeight(height, sex) - 4.64
 }

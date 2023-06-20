@@ -65,11 +65,11 @@ const graphData = (data: MeasurementResults): Partial<PlotData>[] => {
   }
 
   if (data.height) {
-    // output.push({
-    //     x: [data.height.lower, data.height.upper],
-    //     y: [HEIGHT, HEIGHT],
-    //     ...line_trace_properties
-    // });
+    output.push({
+      x: [data.height.lower, data.height.upper],
+      y: [HEIGHT, HEIGHT],
+      ...line_trace_properties,
+    })
     output.push({
       x: [data.height.avg],
       y: [HEIGHT],
@@ -102,6 +102,18 @@ const graphLayout = (data: MeasurementResults): Partial<Layout> => {
       y: HEIGHT,
       x: Math.round(data.height.avg).toString(),
       text: Math.round(data.height.avg).toString(),
+    })
+    annotations.push({
+      ...annotationOpts,
+      y: HEIGHT,
+      x: Math.round(data.height.lower).toString(),
+      text: Math.round(data.height.lower).toString(),
+    })
+    annotations.push({
+      ...annotationOpts,
+      y: HEIGHT,
+      x: Math.round(data.height.upper).toString(),
+      text: Math.round(data.height.upper).toString(),
     })
   }
 

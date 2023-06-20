@@ -32,7 +32,7 @@ export default function Home() {
       convert(insole, insoleUnit, 'mm'),
       nominal,
       classification,
-      convert(height, heightUnit, 'mm'),
+      convert(height, heightUnit, 'cm'),
       sex,
     )
     console.log(results)
