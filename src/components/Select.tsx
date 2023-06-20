@@ -8,19 +8,19 @@ import Label from '@/app/server_components/Label'
 
 interface SelectProps {
   name: string
+  label?: string | React.ReactNode
   options: string[]
   value: string | number
   onChange: Dispatch<any>
-  hideLabel?: boolean
   className?: string
 }
 
-const Select: React.FC<SelectProps> = ({ name, options, value, onChange, hideLabel = false, className }) => {
+const Select: React.FC<SelectProps> = ({ name, label, options, value, onChange, className }) => {
   return (
     <Listbox value={value} onChange={onChange}>
       {({ open }) => (
         <div>
-          {name && !hideLabel && <Label name='name'>{name}</Label>}
+          {label && <Label name='name'>{label}</Label>}
           <div className={twMerge('relative mt-2', className)}>
             <Listbox.Button className='relative w-full cursor-default rounded-md bg-zinc-700 py-1.5 pl-3 pr-10 text-left text-gray-100 shadow-sm ring-1 ring-inset ring-gray-500 focus:outline-none focus:ring-2 focus:ring-sole-green sm:text-sm sm:leading-6'>
               <span className='block truncate'>{value}</span>

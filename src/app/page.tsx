@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 
 import Header from '@/app/server_components/Header'
+import Rating from '@/app/server_components/Rating'
 import DataCard from '@/components/DataCard'
 import Input from '@/components/Input'
 import InputVariable from '@/components/InputVariable'
@@ -44,32 +45,55 @@ export default function Home() {
 
       <UnitHelper className='absolute top-4 right-4' />
 
-      <form className='grid max-w-3xl grid-cols-2 gap-6 px-4 py-5 mx-auto sm:px-6'>
-        <InputVariable
-          name='Insole Length'
-          inputValue={insole}
-          onInputChange={setInsole}
-          selectValue={insoleUnit}
-          onSelectChange={setInsoleUnit}
-          stars={3}
-          className='col-span-2'
-        />
-        <Input name='Nominal Shoe Size - US' value={nominal} onChange={setNominal} stars={2} />
-        <Select
-          name='Footwear Classification'
-          options={classifications}
-          value={classification}
-          onChange={setClassification}
-        />
-        <InputVariable
-          name='Subject Height'
-          inputValue={height}
-          onInputChange={setHeight}
-          selectValue={heightUnit}
-          onSelectChange={setHeightUnit}
-          stars={1}
-        />
-        <Select name='Birth Sex' options={sexes} value={sex} onChange={setSex} />
+      <form className='flex flex-col max-w-3xl gap-6 px-4 py-5 mx-auto sm:px-6'>
+        <div>
+          <InputVariable
+            name='insole'
+            inputValue={insole}
+            onInputChange={setInsole}
+            selectValue={insoleUnit}
+            onSelectChange={setInsoleUnit}
+            label={
+              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
+                <Rating stars={3} /> Insole Length
+              </div>
+            }
+          />
+        </div>
+        <div className='grid items-end grid-cols-2 gap-6'>
+          <Input
+            name='nominal'
+            value={nominal}
+            onChange={setNominal}
+            label={
+              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
+                <Rating stars={2} /> Nominal Shoe Size - US
+              </div>
+            }
+          />
+          <Select
+            name='footwearClass'
+            label='Footwear Classification'
+            options={classifications}
+            value={classification}
+            onChange={setClassification}
+          />
+        </div>
+        <div className='grid items-end grid-cols-2 gap-6'>
+          <InputVariable
+            name='height'
+            inputValue={height}
+            onInputChange={setHeight}
+            selectValue={heightUnit}
+            onSelectChange={setHeightUnit}
+            label={
+              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
+                <Rating stars={1} /> Subject Height
+              </div>
+            }
+          />
+          <Select name='sex' label='Birth Sex' options={sexes} value={sex} onChange={setSex} />
+        </div>
       </form>
 
       <Header as='h2' className='text-3xl text-center'>
