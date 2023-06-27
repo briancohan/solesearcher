@@ -33,16 +33,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({ url, data }) => {
     }
   }
 
-  if (navigator.canShare()) {
-    return (
-      <Button aria-label='Share' onClick={share}>
-        <Icon icon='material-symbols:share' className='w-6 h-6' />
-      </Button>
-    )
-  }
   return (
-    <Button aria-label='Copy URL' onClick={writeToClipboard}>
-      <Icon icon='mingcute:copy-line' className='w-6 h-6' />
+    <Button aria-label='Share' onClick={navigator.canShare() ? share : writeToClipboard}>
+      <Icon icon='material-symbols:share' className='w-6 h-6' />
     </Button>
   )
 }
