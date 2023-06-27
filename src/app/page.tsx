@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 import Button from '@/app/server_components/Button'
 import Header from '@/app/server_components/Header'
@@ -31,6 +31,7 @@ export default function Home() {
   const [measurements, setMeasurements] = useState<Results>({ shod: {}, unshod: {}, best: 'insole' } as Results)
 
   const params = useSearchParams()
+  const pathname = usePathname()
 
   useEffect(() => {
     const results = calculateMeasurements(
@@ -90,7 +91,7 @@ export default function Home() {
           </Button>
           <UnitHelper className='absolute top-4 right-4' />
           <ShareButton
-            url='/'
+            url={window.location.origin + pathname}
             data={{
               insole: insole.toString(),
               insoleUnit,
