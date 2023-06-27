@@ -119,6 +119,7 @@ export default function Home() {
         </div>
         <div className='grid items-end grid-cols-2 gap-6'>
           <Input
+            type='number'
             name='nominal'
             value={nominal}
             onChange={setNominal}
