@@ -20,16 +20,16 @@ const ShareButton: React.FC<ShareButtonProps> = ({ url, data }) => {
         url: href,
       })
     } catch (err) {
-      toast.error('Failed to share')
+      toast.error('Failed to share URL')
     }
   }
 
   const writeToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(href)
-      toast.success('Copied to clipboard')
+      toast.success('Copied URL to clipboard')
     } catch (err) {
-      toast.error('Failed to copy')
+      toast.error('Failed to copy URL')
     }
   }
 
