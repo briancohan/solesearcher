@@ -155,7 +155,6 @@ function calculateUnshodFromHeight(height: number, sex: Sex): Measurement {
 }
 
 function calculateUnshodAvgFromHeight(height: number, sex: Sex, errorFactor: number): number {
-  console.log(height)
   const male = {
     m: 3.447,
     b: 82.206,
