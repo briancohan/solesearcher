@@ -2,7 +2,7 @@ import { Dispatch } from 'react'
 
 interface ButtonProps {
   children: React.ReactNode
-  onClick: Dispatch<any>
+  onClick?: Dispatch<any>
 }
 
 const Button: React.FC<ButtonProps> = ({ children, onClick, ...props }) => {

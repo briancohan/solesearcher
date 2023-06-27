@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 
+import { useSearchParams } from 'next/navigation'
+
 import Button from '@/app/server_components/Button'
 import Header from '@/app/server_components/Header'
 import Rating from '@/app/server_components/Rating'
@@ -9,6 +11,7 @@ import DataCard from '@/components/DataCard'
 import Input from '@/components/Input'
 import InputVariable from '@/components/InputVariable'
 import Select from '@/components/Select'
+import ShareButton from '@/components/ShareButton'
 import UnitHelper from '@/components/UnitHelper'
 import calculateMeasurements from '@/lib/calcs'
 import convert from '@/lib/convert'
@@ -27,6 +30,8 @@ export default function Home() {
   const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
   const [measurements, setMeasurements] = useState<Results>({ shod: {}, unshod: {}, best: 'insole' } as Results)
 
+  const params = useSearchParams()
+
   useEffect(() => {
     const results = calculateMeasurements(
       convert(insole, insoleUnit, 'mm'),
@@ -35,9 +40,32 @@ export default function Home() {
       convert(height, heightUnit, 'cm'),
       sex,
     )
-    console.log(results)
     setMeasurements(results)
   }, [insole, nominal, classification, height, sex, insoleUnit, heightUnit])
+
+  useEffect(() => {
+    if (params.has('insole')) {
+      setInsole(Number(params.get('insole')))
+    }
+    if (params.has('insoleUnit')) {
+      setInsoleUnit(params.get('insoleUnit') as unit)
+    }
+    if (params.has('nominal')) {
+      setNominal(Number(params.get('nominal')))
+    }
+    if (params.has('classification')) {
+      setClassification(params.get('classification') as Classification)
+    }
+    if (params.has('height')) {
+      setHeight(Number(params.get('height')))
+    }
+    if (params.has('heightUnit')) {
+      setHeightUnit(params.get('heightUnit') as unit)
+    }
+    if (params.has('sex')) {
+      setSex(params.get('sex') as Sex)
+    }
+  }, [])
 
   function resetForm() {
     setInsole(0)
@@ -56,11 +84,23 @@ export default function Home() {
       </Header>
 
       <form className='flex flex-col max-w-3xl gap-6 px-4 py-5 mx-auto sm:px-6'>
-        <div className='flex justify-center gap-6'>
+        <div className='flex justify-center gap-12'>
           <Button onClick={resetForm} aria-label='Reset Form'>
             <Icon icon='carbon:reset' className='w-6 h-6' />
           </Button>
           <UnitHelper className='absolute top-4 right-4' />
+          <ShareButton
+            url='/'
+            data={{
+              insole: insole.toString(),
+              insoleUnit,
+              nominal: nominal.toString(),
+              classification,
+              height: height.toString(),
+              heightUnit,
+              sex,
+            }}
+          />
         </div>
         <div>
           <InputVariable

@@ -12,3 +12,9 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
+
+:root {
+  --toastify-color-dark: #18181b;
+  --toastify-color-success: hsl(83, 13%, 45%);
+  --toastify-color-error: hsl(6, 52%, 45%);
+}
