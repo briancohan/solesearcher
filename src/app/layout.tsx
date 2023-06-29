@@ -1,4 +1,5 @@
 import { ToastContainer } from 'react-toastify'
+import { Analytics } from '@vercel/analytics/react'
 
 import { Inter } from 'next/font/google'
 
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           pauseOnHover
           theme='dark'
         />
+        <Analytics />
       </body>
     </html>
   )
