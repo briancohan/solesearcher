@@ -12,18 +12,6 @@ interface ShareButtonProps {
 const ShareButton: React.FC<ShareButtonProps> = ({ url, data }) => {
   const href = `${url}?${new URLSearchParams(data).toString()}`
 
-  const share = async () => {
-    try {
-      await navigator.share({
-        title: 'Sole Searcher',
-        text: 'View Sole Searcher Results',
-        url: href,
-      })
-    } catch (err) {
-      toast.error('Failed to share URL')
-    }
-  }
-
   const writeToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(href)
@@ -34,7 +22,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ url, data }) => {
   }
 
   return (
-    <Button aria-label='Share' onClick={navigator.canShare() ? share : writeToClipboard}>
+    <Button aria-label='Share' onClick={writeToClipboard}>
       <Icon icon='material-symbols:share' className='w-6 h-6' />
     </Button>
   )
