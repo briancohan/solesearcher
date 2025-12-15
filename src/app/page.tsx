@@ -21,6 +21,7 @@ const classifications: Classification[] = ["Men's", "Women's", 'Youth']
 const sexes: Sex[] = ['Male', 'Female']
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false)
   const [insole, setInsole] = useLocalStorage<number>('insole', 292)
   const [insoleUnit, setInsoleUnit] = useLocalStorage<unit>('insoleUnit', 'mm')
   const [nominal, setNominal] = useLocalStorage<number>('nominal', 11.5)
@@ -43,6 +44,10 @@ export default function Home() {
     )
     setMeasurements(results)
   }, [insole, nominal, classification, height, sex, insoleUnit, heightUnit])
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   useEffect(() => {
     if (params.has('insole')) {
@@ -91,7 +96,7 @@ export default function Home() {
           </Button>
           <UnitHelper className='absolute top-4 right-4' />
           <ShareButton
-            url={window.location.origin + pathname}
+            url={typeof window !== 'undefined' ? window.location.origin + pathname : ''}
             data={{
               insole: insole.toString(),
               insoleUnit,
@@ -133,7 +138,7 @@ export default function Home() {
             name='footwearClass'
             label='Footwear Classification'
             options={classifications}
-            value={classification}
+            value={mounted ? classification : classifications[0]}
             onChange={setClassification}
           />
         </div>
@@ -150,7 +155,7 @@ export default function Home() {
               </div>
             }
           />
-          <Select name='sex' label='Birth Sex' options={sexes} value={sex} onChange={setSex} />
+          <Select name='sex' label='Birth Sex' options={sexes} value={mounted ? sex : sexes[0]} onChange={setSex} />
         </div>
       </form>
 

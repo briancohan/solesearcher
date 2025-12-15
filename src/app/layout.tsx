@@ -16,9 +16,12 @@ export const metadata = {
     'Simple app to determine the shod outsole track length and unshod barefoot track length based on known insole measurements, nominal shoe size, and subject height for Search & Rescue purposes.',
   keywords: ['search', 'rescue', 'tracking', 'barefoot', 'shod', 'sole', 'footwear', 'foot', 'length', 'measure'],
   manifest: '/manifest.json',
-  themeColor: '#758063',
   author: 'Brian Cohan',
   publisher: 'tracking-books.com',
+}
+
+export const viewport = {
+  themeColor: '#758063',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
