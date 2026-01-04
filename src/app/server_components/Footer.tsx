@@ -6,9 +6,9 @@ const Footer: React.FC = () => {
       <Image src='/sole-searcher-logo.webp' alt='Sole Searcher Logo' width={250} height={250} priority />
       <p className='text-zinc-300'>
         Produced for{' '}
-        <a className='text-sole-tan' href='http://tracking-books.com'>
-          Tracking Books
-        </a>
+        <span className='text-sole-tan'>
+          Search And Research
+        </span>
       </p>
     </div>
   )

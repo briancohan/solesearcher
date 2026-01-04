@@ -11,12 +11,12 @@ type MeasurementResults = {
 }
 
 type Results = {
-  shod: MeasurementResults
-  unshod: MeasurementResults
+  shoe: MeasurementResults
+  foot: MeasurementResults
   best: 'insole' | 'nominal' | 'height'
 }
 
-type Classification = "Men's" | "Women's" | 'Youth'
+type Classification = "Men's - US" | "Women's - US" | 'Youth - US' | "Child - US" | "Unknown - US" | "European"
 type Sex = 'Male' | 'Female'
 
 type Fraction = {
@@ -26,3 +26,9 @@ type Fraction = {
 }
 
 type unit = 'mm' | 'cm' | 'in'
+
+type LinearModel = {
+  slope: number,
+  intercept: number,
+  error: number
+}

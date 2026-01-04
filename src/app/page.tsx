@@ -17,19 +17,23 @@ import calculateMeasurements from '@/lib/calcs'
 import convert from '@/lib/convert'
 import useLocalStorage from '@/lib/hooks/useLocalStorage'
 
-const classifications: Classification[] = ["Men's", "Women's", 'Youth']
+const classifications: Classification[] = ['European', "Men's - US", "Women's - US", 'Youth - US', 'Child - US', "Unknown - US"]
 const sexes: Sex[] = ['Male', 'Female']
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+
   const [insole, setInsole] = useLocalStorage<number>('insole', 292)
   const [insoleUnit, setInsoleUnit] = useLocalStorage<unit>('insoleUnit', 'mm')
+
   const [nominal, setNominal] = useLocalStorage<number>('nominal', 11.5)
   const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
+
   const [height, setHeight] = useLocalStorage<number>('height', 1828)
   const [heightUnit, setHeightUnit] = useLocalStorage<unit>('heightUnit', 'mm')
   const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
-  const [measurements, setMeasurements] = useState<Results>({ shod: {}, unshod: {}, best: 'insole' } as Results)
+
+  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {}, best: 'insole' } as Results)
 
   const params = useSearchParams()
   const pathname = usePathname()
@@ -39,7 +43,7 @@ export default function Home() {
       convert(insole, insoleUnit, 'mm'),
       nominal,
       classification,
-      convert(height, heightUnit, 'cm'),
+      convert(height, heightUnit, 'mm'),
       sex,
     )
     setMeasurements(results)
@@ -130,7 +134,7 @@ export default function Home() {
             onChange={setNominal}
             label={
               <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                <Rating stars={2} /> Nominal Shoe Size - US
+                <Rating stars={2} /> Nominal Shoe Size
               </div>
             }
           />
@@ -165,14 +169,14 @@ export default function Home() {
       <div className='grid items-start max-w-3xl grid-cols-1 gap-5 mx-auto mt-5 sm:grid-cols-2'>
         <DataCard
           best={measurements.best}
-          results={measurements.shod}
-          title='Outsole Track Length'
+          results={measurements.shoe}
+          title='Shoeprint Length'
           icon='mingcute:shoe-line'
         />
         <DataCard
           best={measurements.best}
-          results={measurements.unshod}
-          title='Barefoot Track Length'
+          results={measurements.foot}
+          title='Footprint Length'
           icon='icon-park-outline:foot'
         />
       </div>

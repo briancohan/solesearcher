@@ -1,6 +1,10 @@
-import convert from './convert'
 /**
  * Main function to calculate shoe size from insole, nominal, or height
+ *
+ * This will calculate the values for all metrics, but will also
+ * indicate which is the best for the app to use. The order in which the
+ * calcs are done (height, nominal, insole) are in reverse order of
+ * best metric so that returnObj.best will be overwritten as necessary.
  */
 export default function calculateMeasurements(
   insole: number,
@@ -9,167 +13,175 @@ export default function calculateMeasurements(
   height: number,
   sex: Sex,
 ): Results {
-  const returnObj: Results = { shod: {}, unshod: {}, best: 'insole' }
+  const returnObj: Results = { shoe: {}, foot: {}, best: 'insole' }
 
   if (height) {
-    returnObj.shod.height = calculateShodFromHeight(height, sex)
-    returnObj.unshod.height = calculateUnshodFromHeight(height, sex)
+    returnObj.shoe.height = shoeFromHeight(height, sex)
+    returnObj.foot.height = footFromHeight(height, sex)
     returnObj.best = 'height'
   }
   if (nominal) {
-    returnObj.shod.nominal = calculateShodFromnominal(nominal, classification)
-    returnObj.unshod.nominal = calculateUnshodFromnominal(nominal, classification)
+    returnObj.shoe.nominal = shoeFromNominal(nominal, classification, height, sex)
+    returnObj.foot.nominal = footFromNominal(nominal, classification, height, sex)
     returnObj.best = 'nominal'
   }
   if (insole) {
-    returnObj.shod.insole = calculateShodFromInsole(insole)
-    returnObj.unshod.insole = calculateUnshodFromInsole(insole)
+    returnObj.shoe.insole = shoeFromInsole(insole)
+    returnObj.foot.insole = footFromInsole(insole)
     returnObj.best = 'insole'
   }
+
   return returnObj
+}
+
+function modelPrediction(value: number, model: LinearModel): Measurement {
+  const { slope, intercept, error } = model
+
+  var avg = slope * value + intercept
+
+  return {
+    avg: avg,
+    lower: avg - error,
+    upper: avg + error,
+  }
 }
 
 /**
  * Insole Length Calculations
  */
-function calculateUnshodFromInsole(insole: number): Measurement {
-  return {
-    avg: calculateAvgUnshodFromInsole(insole),
-    lower: calculateLowerUnshodFromInsole(insole),
-    upper: calculateUpperUnshodFromInsole(insole),
+function shoeFromInsole(insole: number): Measurement {
+  return modelPrediction(insole, {
+    slope: 1.07534,
+    intercept: 11.30536,
+    error: 12.07
+  })
+}
+
+function footFromInsole(insole: number): Measurement {
+  return modelPrediction(insole, {
+    slope: 0.92034,
+    intercept: 15.12528,
+    error: 8.342
+  })
+}
+
+function modelPrediction2(input: MultiModelInput): Measurement {
+  const {nominal, classification, height, sex} = input
+
+  let error = 11.53
+
+  let avg = 208.9104
+  avg += 38.426 * (sex == "Male" ? 1 : 0)
+  avg += 7.8157 * nominal
+
+  switch (classification) {
+    case "Child - US":
+      avg += nominal * -8.76548
+    case "Men's - US":
+      avg += nominal * 1.1723
+    case "Women's - US":
+      avg += nominal * -0.6432
+    case "Youth - US":
+      avg += nominal * -0.4718
+    case "Unknown - US":
+      avg += nominal * 0
   }
-}
 
-function calculateShodFromInsole(insole: number): Measurement {
+  // avg = 216.0115 + 8.3310 * nominal
+
   return {
-    avg: calculateAvgShodFromInsole(insole),
-    lower: calculateLowerShodFromInsole(insole),
-    upper: calculateUpperShodFromInsole(insole),
+    avg: avg,
+    lower: avg - error,
+    upper: avg + error,
   }
-}
-
-function calculateAvgShodFromInsole(insole: number): number {
-  return insole * 1.03 + 18
-}
-
-function calculateAvgUnshodFromInsole(insole: number): number {
-  return insole * 0.92 + 12
-}
-
-function calculateLowerShodFromInsole(insole: number): number {
-  return insole * 1.03 - 4.55
-}
-
-function calculateUpperShodFromInsole(insole: number): number {
-  return insole * 1.03 + 40.56
-}
-
-function calculateLowerUnshodFromInsole(insole: number): number {
-  return (
-    calculateLowerShodFromInsole(insole) - (calculateAvgShodFromInsole(insole) - calculateAvgUnshodFromInsole(insole))
-  )
-}
-
-function calculateUpperUnshodFromInsole(insole: number): number {
-  return (
-    calculateUpperShodFromInsole(insole) - (calculateAvgShodFromInsole(insole) - calculateAvgUnshodFromInsole(insole))
-  )
 }
 
 /**
  * Nominal Shoe Size Calculations
  */
-function calculateUnshodFromnominal(nominal: number, classification: Classification): Measurement {
+function shoeFromNominal(nominal: number, classification: Classification, height: number, sex: Sex): Measurement {
+  let input = {nominal: nominal, classification: classification, height: height, sex: sex}
+
   switch (classification) {
-    case "Men's":
-      return {
-        avg: nominal * 6.169578261 + 212,
-        lower: nominal * 6.169538261 + 189,
-        upper: nominal * 6.16961913 + 236,
-      }
-      break
-    case "Women's":
-      return {
-        avg: nominal * 6.361212 + 203,
-        lower: nominal * 6.361212 + 178,
-        upper: nominal * 6.361212 + 223,
-      }
-      break
-    case 'Youth':
-      return {
-        avg: nominal * 6.242857143 + 134,
-        lower: nominal * 6.242857143 + 110,
-        upper: nominal * 6.242857143 + 155,
-      }
-      break
+    case "European":
+      return modelPrediction(nominal, {
+        slope: 6.7967,
+        intercept: 4.247,
+        error: 9.805
+      })
+    case "Men's - US":
+      return modelPrediction(nominal, {
+        slope: 0,
+        intercept: 0,
+        error: 11.53
+      })
+    case "Women's - US":
+      return modelPrediction2(input)
+    case 'Youth - US':
+      return modelPrediction2(input)
+    case 'Child - US':
+      return modelPrediction2(input)
+    case 'Unknown - US':
+      return modelPrediction2(input)
   }
 }
 
-function calculateShodFromnominal(nominal: number, classification: Classification): Measurement {
+function footFromNominal(nominal: number, classification: Classification, height: number, sex: Sex): Measurement {
+  let input = {nominal: nominal, classification: classification, height: height, sex: sex}
+
   switch (classification) {
-    case "Men's":
-      return {
-        avg: 8.6 * nominal + 215,
-        lower: 8.499565882 * nominal + 192,
-        upper: 8.440527059 * nominal + 237,
-      }
-      break
-    case "Women's":
-      return {
-        avg: 9.8 * nominal + 192,
-        lower: 9.687246 * nominal + 170,
-        upper: 9.918858 * nominal + 215,
-      }
-      break
-    case 'Youth':
-      return {
-        avg: 8.7 * nominal + 105,
-        lower: 8.732732727 * nominal + 93,
-        upper: 8.737778182 * nominal + 117,
-      }
-      break
+    case "European":
+      return modelPrediction(nominal, {
+        slope: 5.9549,
+        intercept: 2.8669,
+        error: 8.926
+      })
+    case "Men's - US":
+      return modelPrediction2(input)
+    case "Women's - US":
+      return modelPrediction2(input)
+    case 'Youth - US':
+      return modelPrediction2(input)
+    case 'Child - US':
+      return modelPrediction2(input)
+    case 'Unknown - US':
+      return modelPrediction2(input)
   }
 }
 
 /**
  * Height Calculations
  */
-function calculateShodFromHeight(height: number, sex: Sex): Measurement {
-  const { avg, lower, upper } = calculateUnshodFromHeight(height, sex)
-  const offset = 25.4
-
-  return {
-    avg: avg + offset,
-    lower: lower + offset,
-    upper: upper + offset,
-  }
-}
-
-function calculateUnshodFromHeight(height: number, sex: Sex): Measurement {
-  const ci95 = 1.96
-  return {
-    avg: convert(calculateUnshodAvgFromHeight(height, sex, 0), 'cm', 'mm'),
-    lower: convert(calculateUnshodAvgFromHeight(height, sex, -ci95), 'cm', 'mm'),
-    upper: convert(calculateUnshodAvgFromHeight(height, sex, ci95), 'cm', 'mm'),
-  }
-}
-
-function calculateUnshodAvgFromHeight(height: number, sex: Sex, errorFactor: number): number {
-  const male = {
-    m: 3.447,
-    b: 82.206,
-    sigma: 4.856,
-  }
-  const female = {
-    m: 3.614,
-    b: 75.065,
-    sigma: 4.7,
-  }
-
+function shoeFromHeight(height: number, sex: Sex): Measurement {
   switch (sex) {
-    case 'Male':
-      return (height + male.sigma * errorFactor - male.b) / male.m
-    case 'Female':
-      return (height + female.sigma * errorFactor - female.b) / female.m
+    case "Female":
+      return modelPrediction(height, {
+        slope: 0.145755,
+        intercept: 30.617001,
+        error: 13.79
+      })
+    case "Male":
+      return modelPrediction(height, {
+        slope: 0.145755,
+        intercept: 30.617001 + 13.872472,
+        error: 13.79
+      })
+  }
+}
+
+function footFromHeight(height: number, sex: Sex): Measurement {
+  switch (sex) {
+    case "Female":
+      return modelPrediction(height, {
+        slope: 0.128018,
+        intercept: 27.776861,
+        error: 11.36
+      })
+    case "Male":
+      return modelPrediction(height, {
+        slope: 0.128018,
+        intercept: 27.776861 + 8.318914,
+        error: 11.36
+      })
   }
 }
