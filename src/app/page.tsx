@@ -17,7 +17,7 @@ import calculateMeasurements from '@/lib/calcs'
 import convert from '@/lib/convert'
 import useLocalStorage from '@/lib/hooks/useLocalStorage'
 
-const classifications: Classification[] = ['European', "Men's - US", "Women's - US", 'Youth - US', 'Child - US', "Unknown - US"]
+const classifications: Classification[] = ['European', "Men's - US", "Women's - US", 'Youth - US', 'Child - US']
 const sexes: Sex[] = ['Male', 'Female']
 
 export default function Home() {

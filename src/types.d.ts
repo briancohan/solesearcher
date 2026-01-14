@@ -16,7 +16,7 @@ type Results = {
   best: 'insole' | 'nominal' | 'height'
 }
 
-type Classification = "Men's - US" | "Women's - US" | 'Youth - US' | "Child - US" | "Unknown - US" | "European"
+type Classification = "Men's - US" | "Women's - US" | 'Youth - US' | "Child - US" | "European"
 type Sex = 'Male' | 'Female'
 
 type Fraction = {
@@ -30,5 +30,8 @@ type unit = 'mm' | 'cm' | 'in'
 type LinearModel = {
   slope: number,
   intercept: number,
-  error: number
+  rse: number,
+  n: integer,
+  sos: number,
+  xMean: number,
 }
