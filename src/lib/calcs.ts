@@ -42,7 +42,7 @@ function modelPrediction(value: number, model: LinearModel): Measurement {
   var avg = slope * value + intercept
   var tCrit = jStat.studentt.inv(0.95, n - 2)
 
-  var sPred = Math.sqrt(Math.pow(rse, 2) * (1 + (1 / n) + (Math.pow(value - xMean, 2) / sos)))
+  var sPred = Math.sqrt(Math.pow(rse, 2) * (1 + 1 / n + Math.pow(value - xMean, 2) / sos))
   var margin = tCrit * sPred
 
   return {
@@ -80,7 +80,7 @@ function shoeFromInsole(insole: number): Measurement {
     rse: 11.98,
     n: 130,
     sos: 18518.7,
-    xMean: 253.155
+    xMean: 253.155,
   })
 }
 
@@ -109,7 +109,7 @@ function footFromInsole(insole: number): Measurement {
     rse: 8.93,
     n: 130,
     sos: 10286.2,
-    xMean: 253.155
+    xMean: 253.155,
   })
 }
 
@@ -160,16 +160,15 @@ function footFromInsole(insole: number): Measurement {
 // Multiple R-squared:  0.8916,	Adjusted R-squared:  0.8894
 // F-statistic: 404.3 on 7 and 344 DF,  p-value: < 2.2e-16
 function shoeFromNominal(nominal: number, classification: Classification): Measurement {
-
   switch (classification) {
-    case "European":
+    case 'European':
       return modelPrediction(nominal, {
         slope: 6.6319,
         intercept: 10.3269,
         rse: 10.75,
         n: 327,
         sos: 37658.4,
-        xMean: 40.886
+        xMean: 40.886,
       })
     case "Men's - US":
       return modelPrediction(nominal, {
@@ -178,7 +177,7 @@ function shoeFromNominal(nominal: number, classification: Classification): Measu
         rse: 10.86,
         n: 172,
         sos: 21296.6,
-        xMean: 10.48
+        xMean: 10.48,
       })
     case "Women's - US":
       return modelPrediction(nominal, {
@@ -187,16 +186,16 @@ function shoeFromNominal(nominal: number, classification: Classification): Measu
         rse: 10.86,
         n: 138,
         sos: 15820.5,
-        xMean: 8.2155
+        xMean: 8.2155,
       })
     case 'Youth - US':
       return modelPrediction(nominal, {
         slope: 8.5342 + -2.4232,
-        intercept: 100.8215 + 117.0270,
+        intercept: 100.8215 + 117.027,
         rse: 10.86,
         n: 24,
         sos: 2806.1,
-        xMean: 3.4423
+        xMean: 3.4423,
       })
     case 'Child - US':
       return modelPrediction(nominal, {
@@ -205,7 +204,7 @@ function shoeFromNominal(nominal: number, classification: Classification): Measu
         rse: 10.86,
         n: 18,
         sos: 649.33,
-        xMean: 11.0667
+        xMean: 11.0667,
       })
   }
 }
@@ -254,16 +253,15 @@ function shoeFromNominal(nominal: number, classification: Classification): Measu
 // Multiple R-squared:    0.9,	Adjusted R-squared:  0.898
 // F-statistic: 442.3 on 7 and 344 DF,  p-value: < 2.2e-16
 function footFromNominal(nominal: number, classification: Classification): Measurement {
-
   switch (classification) {
-    case "European":
+    case 'European':
       return modelPrediction(nominal, {
         slope: 5.6502,
         intercept: 14.1244,
         rse: 9.495,
         n: 327,
         sos: 29387.6,
-        xMean: 40.886
+        xMean: 40.886,
       })
     case "Men's - US":
       return modelPrediction(nominal, {
@@ -272,7 +270,7 @@ function footFromNominal(nominal: number, classification: Classification): Measu
         rse: 8.86,
         n: 172,
         sos: 12458.1,
-        xMean: 10.479
+        xMean: 10.479,
       })
     case "Women's - US":
       return modelPrediction(nominal, {
@@ -281,7 +279,7 @@ function footFromNominal(nominal: number, classification: Classification): Measu
         rse: 8.86,
         n: 138,
         sos: 10167.8,
-        xMean: 8.2155
+        xMean: 8.2155,
       })
     case 'Youth - US':
       return modelPrediction(nominal, {
@@ -290,7 +288,7 @@ function footFromNominal(nominal: number, classification: Classification): Measu
         rse: 8.86,
         n: 24,
         sos: 3561.6,
-        xMean: 3.4423
+        xMean: 3.4423,
       })
     case 'Child - US':
       return modelPrediction(nominal, {
@@ -298,8 +296,8 @@ function footFromNominal(nominal: number, classification: Classification): Measu
         intercept: 107.935 + 0,
         rse: 8.86,
         n: 18,
-        sos: 816.40,
-        xMean: 11.0667
+        sos: 816.4,
+        xMean: 11.0667,
       })
   }
 }
@@ -328,25 +326,24 @@ function footFromNominal(nominal: number, classification: Classification): Measu
 // Multiple R-squared:  0.8151,	Adjusted R-squared:  0.8136
 // F-statistic: 537.9 on 3 and 366 DF,  p-value: < 2.2e-16
 function shoeFromHeight(height: number, sex: Sex): Measurement {
-
   switch (sex) {
-    case "Female":
+    case 'Female':
       return modelPrediction(height, {
         slope: 0.134215,
         intercept: 49.493764,
         rse: 14.49,
         n: 184,
         sos: 44429.1,
-        xMean: 1589.91
+        xMean: 1589.91,
       })
-    case "Male":
+    case 'Male':
       return modelPrediction(height, {
         slope: 0.134215 + 0.016243,
-        intercept: 49.493764 + -12.741260,
+        intercept: 49.493764 + -12.74126,
         rse: 14.49,
         n: 186,
         sos: 32464.66,
-        xMean: 1722.18
+        xMean: 1722.18,
       })
   }
 }
@@ -373,23 +370,23 @@ function shoeFromHeight(height: number, sex: Sex): Measurement {
 // F-statistic:   675 on 3 and 366 DF,  p-value: < 2.2e-16
 function footFromHeight(height: number, sex: Sex): Measurement {
   switch (sex) {
-    case "Female":
+    case 'Female':
       return modelPrediction(height, {
         slope: 0.120682,
         intercept: 38.822789,
         rse: 11.19,
         n: 184,
         sos: 23799.4,
-        xMean: 1589.91
+        xMean: 1589.91,
       })
-    case "Male":
+    case 'Male':
       return modelPrediction(height, {
-        slope: 0.120682 + 0.014910,
+        slope: 0.120682 + 0.01491,
         intercept: 38.822789 + -16.091595,
         rse: 11.19,
         n: 186,
         sos: 22050.5,
-        xMean: 1722.18
+        xMean: 1722.18,
       })
   }
 }
