@@ -164,7 +164,9 @@ const graphLayout = (data: MeasurementResults): Partial<Layout> => {
   }
 
   return {
-    title: 'Predicted Ranges - mm',
+    title: {
+      text: 'Predicted Ranges - mm',
+    },
     xaxis: {
       showgrid: false,
       visible: false,
