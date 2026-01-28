@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -20,38 +20,25 @@ import useLocalStorage from '@/lib/hooks/useLocalStorage'
 const classifications: Classification[] = ['European', "Men's - US", "Women's - US", 'Youth - US', 'Child - US']
 const sexes: Sex[] = ['Male', 'Female']
 
-export default function Home() {
-  const [mounted, setMounted] = useState(false)
-
-  const [insole, setInsole] = useLocalStorage<number>('insole', 276)
-  const [insoleUnit, setInsoleUnit] = useLocalStorage<unit>('insoleUnit', 'mm')
-
-  const [nominal, setNominal] = useLocalStorage<number>('nominal', 45)
-  const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
-
-  const [height, setHeight] = useLocalStorage<number>('height', 1828)
-  const [heightUnit, setHeightUnit] = useLocalStorage<unit>('heightUnit', 'mm')
-  const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
-
-  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {}, best: 'insole' } as Results)
-
+// Component to handle search params with proper Suspense boundary
+function SearchParamsHandler({
+  setInsole,
+  setInsoleUnit,
+  setNominal,
+  setClassification,
+  setHeight,
+  setHeightUnit,
+  setSex,
+}: {
+  setInsole: (value: number) => void
+  setInsoleUnit: (value: unit) => void
+  setNominal: (value: number) => void
+  setClassification: (value: Classification) => void
+  setHeight: (value: number) => void
+  setHeightUnit: (value: unit) => void
+  setSex: (value: Sex) => void
+}) {
   const params = useSearchParams()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    const results = calculateMeasurements(
-      convert(insole, insoleUnit, 'mm'),
-      nominal,
-      classification,
-      convert(height, heightUnit, 'mm'),
-      sex,
-    )
-    setMeasurements(results)
-  }, [insole, nominal, classification, height, sex, insoleUnit, heightUnit])
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     if (params.has('insole')) {
@@ -75,6 +62,41 @@ export default function Home() {
     if (params.has('sex')) {
       setSex(params.get('sex') as Sex)
     }
+  }, [params, setInsole, setInsoleUnit, setNominal, setClassification, setHeight, setHeightUnit, setSex])
+
+  return null
+}
+
+export default function Home() {
+  const [mounted, setMounted] = useState(false)
+
+  const [insole, setInsole] = useLocalStorage<number>('insole', 276)
+  const [insoleUnit, setInsoleUnit] = useLocalStorage<unit>('insoleUnit', 'mm')
+
+  const [nominal, setNominal] = useLocalStorage<number>('nominal', 45)
+  const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
+
+  const [height, setHeight] = useLocalStorage<number>('height', 1828)
+  const [heightUnit, setHeightUnit] = useLocalStorage<unit>('heightUnit', 'mm')
+  const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
+
+  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {}, best: 'insole' } as Results)
+
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const results = calculateMeasurements(
+      convert(insole, insoleUnit, 'mm'),
+      nominal,
+      classification,
+      convert(height, heightUnit, 'mm'),
+      sex,
+    )
+    setMeasurements(results)
+  }, [insole, nominal, classification, height, sex, insoleUnit, heightUnit])
+
+  useEffect(() => {
+    setMounted(true)
   }, [])
 
   function resetForm() {
@@ -89,6 +111,17 @@ export default function Home() {
 
   return (
     <div>
+      <Suspense fallback={null}>
+        <SearchParamsHandler
+          setInsole={setInsole}
+          setInsoleUnit={setInsoleUnit}
+          setNominal={setNominal}
+          setClassification={setClassification}
+          setHeight={setHeight}
+          setHeightUnit={setHeightUnit}
+          setSex={setSex}
+        />
+      </Suspense>
       <Header as='h1' className='text-5xl text-center'>
         Sole Searcher
       </Header>
