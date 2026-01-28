@@ -23,10 +23,10 @@ const sexes: Sex[] = ['Male', 'Female']
 export default function Home() {
   const [mounted, setMounted] = useState(false)
 
-  const [insole, setInsole] = useLocalStorage<number>('insole', 292)
+  const [insole, setInsole] = useLocalStorage<number>('insole', 276)
   const [insoleUnit, setInsoleUnit] = useLocalStorage<unit>('insoleUnit', 'mm')
 
-  const [nominal, setNominal] = useLocalStorage<number>('nominal', 11.5)
+  const [nominal, setNominal] = useLocalStorage<number>('nominal', 45)
   const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
 
   const [height, setHeight] = useLocalStorage<number>('height', 1828)
@@ -140,7 +140,7 @@ export default function Home() {
           />
           <Select
             name='footwearClass'
-            label='Footwear Classification'
+            label='Shoe Size Category'
             options={classifications}
             value={mounted ? classification : classifications[0]}
             onChange={setClassification}
