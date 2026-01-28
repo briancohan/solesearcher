@@ -1,10 +1,10 @@
-import { ToastContainer } from 'react-toastify'
 import { Analytics } from '@vercel/analytics/react'
 
 import { Inter } from 'next/font/google'
 
 import Footer from '@/app/server_components/Footer'
 import Navbar from '@/components/NavBar'
+import { ClientToastContainer } from '@/components/ClientToastContainer'
 
 import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
@@ -33,18 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main className='relative p-2 mx-auto max-w-7xl'>{children}</main>
         <Footer />
-        <ToastContainer
-          position='bottom-right'
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme='dark'
-        />
+        <ClientToastContainer />
         <Analytics />
       </body>
     </html>
