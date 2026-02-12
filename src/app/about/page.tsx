@@ -9,19 +9,19 @@ export const metadata = {
 const people = [
   {
     name: 'Rob Speiden',
-    role: 'Technical Director, Research',
+    role: 'Technical Director, Research, Data Analysis',
   },
+  // {
+  //   name: 'Joel Serano',
+  //   role: 'Data Analysis and Modeling',
+  // },
+  // {
+  //   name: 'Jess Mink',
+  //   role: 'Data Model Implementation',
+  // },
   {
-    name: 'Joel Serano',
-    role: 'Data Analysis and Modeling',
-  },
-  {
-    name: 'Jess Mink',
-    role: 'Data Model Implementation',
-  },
-  {
-    name: 'Brian Cohan',
-    role: 'App Development',
+    name: "Brian \/Root\/ Cohan",
+    role: 'App Development, Data and Modeling Review',
   },
 ]
 
@@ -35,15 +35,15 @@ export default function About() {
       <Header as='h2' className='text-2xl'>
         How to Find Your Sole
       </Header>
-      <p>There are three metrcis used to determine track length. In order of preference, they are:</p>
+      <p>There are three metrcis used to determine track length. In no particular order, they are:</p>
       <ol className='mx-auto ml-8 list-decimal'>
         <li>Insole Length</li>
         <li>Nominal Shoe Size</li>
         <li>Subject Height</li>
       </ol>
       <p>
-        The Predicted range shown will be based on the best metric available. If you have data for multiple metrics, the
-        data ranges will be visible in the details section.
+        The predicted range shown will be based on the metrics available. If you have data for multiple metrics, the
+        data ranges will reflect the overall minimum and maximum value.
       </p>
 
       <Header as='h2' className='text-2xl'>
@@ -51,7 +51,6 @@ export default function About() {
       </Header>
 
       <Header as='h3' className='flex items-center gap-2'>
-        <Rating stars={3} />
         Insole length
       </Header>
       <p>
@@ -66,16 +65,14 @@ export default function About() {
       </p>
 
       <Header as='h3' className='flex items-center gap-2'>
-        <Rating stars={2} />
         Nominal Size
       </Header>
       <p>
         Indicate nominal size in whole or half-size increments. Make sure to set the correct footwear size type:
-        Men&apos;s, Women&apos;s, or Youth.
+        European, Men&apos;s, Women&apos;s, Youth, or Child.
       </p>
 
       <Header as='h3' className='flex items-center gap-2'>
-        <Rating stars={1} />
         Subject Height
       </Header>
       <p>

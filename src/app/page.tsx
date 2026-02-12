@@ -154,7 +154,7 @@ export default function Home() {
             onSelectChange={setInsoleUnit}
             label={
               <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                <Rating stars={3} /> Insole Length
+                Insole Length
               </div>
             }
           />
@@ -167,7 +167,7 @@ export default function Home() {
             onChange={setNominal}
             label={
               <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                <Rating stars={2} /> Nominal Shoe Size
+                Nominal Shoe Size
               </div>
             }
           />
@@ -188,7 +188,7 @@ export default function Home() {
             onSelectChange={setHeightUnit}
             label={
               <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                <Rating stars={1} /> Subject Height
+                Subject Height
               </div>
             }
           />
