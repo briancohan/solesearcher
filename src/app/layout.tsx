@@ -3,8 +3,8 @@ import { Analytics } from '@vercel/analytics/react'
 import { Inter } from 'next/font/google'
 
 import Footer from '@/app/server_components/Footer'
-import Navbar from '@/components/NavBar'
 import { ClientToastContainer } from '@/components/ClientToastContainer'
+import Navbar from '@/components/NavBar'
 
 import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'

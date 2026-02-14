@@ -152,11 +152,7 @@ export default function Home() {
             onInputChange={setInsole}
             selectValue={insoleUnit}
             onSelectChange={setInsoleUnit}
-            label={
-              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                Insole Length
-              </div>
-            }
+            label={<div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>Insole Length</div>}
           />
         </div>
         <div className='grid items-end grid-cols-2 gap-6'>
@@ -165,11 +161,7 @@ export default function Home() {
             name='nominal'
             value={nominal}
             onChange={setNominal}
-            label={
-              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                Nominal Shoe Size
-              </div>
-            }
+            label={<div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>Nominal Shoe Size</div>}
           />
           <Select
             name='footwearClass'
@@ -186,11 +178,7 @@ export default function Home() {
             onInputChange={setHeight}
             selectValue={heightUnit}
             onSelectChange={setHeightUnit}
-            label={
-              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>
-                Subject Height
-              </div>
-            }
+            label={<div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>Subject Height</div>}
           />
           <Select name='sex' label='Birth Sex' options={sexes} value={mounted ? sex : sexes[0]} onChange={setSex} />
         </div>

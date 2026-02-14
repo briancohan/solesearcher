@@ -20,7 +20,7 @@ const people = [
   //   role: 'Data Model Implementation',
   // },
   {
-    name: "Brian \/Root\/ Cohan",
+    name: 'Brian /Root/ Cohan',
     role: 'App Development, Data and Modeling Review',
   },
 ]
