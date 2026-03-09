@@ -204,16 +204,20 @@ export default function Home() {
 
       <div className='flex flex-col max-w-2xl gap-6 px-4 py-5 mx-auto sm:px-6'>
         <Header as='h2' className='text-3xl text-center'>
-          Measuring Track Length
+          Measuring Track and Insole Lengths
         </Header>
         <p>
-          Shoe or foot tracks measured at the points where the vertical and horizontal aspects of the slope are equal,
-          nominally 45<sup>&deg;</sup>.
+          Shoeprint, footprint, and sole measurements should be made at the point where
+          the vertical aspect of the slope meets or exceeds the horizontal aspect.
+
+        </p>
+        <p>
+          For shoeprints made with outsoles that have vertical walls, this will be the edge of the shoeprint.
+          For footprints and shoeprints made with outsoles that have curved edges, this is where the slope is 45<sup>&deg;</sup>.
         </p>
         <div className='mx-auto'>
           <svg
-            width='200'
-            height='175'
+            width="full"
             viewBox='0 0 200 175'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'

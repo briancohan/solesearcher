@@ -1,13 +1,15 @@
-type Measurement = {
+type ModelResults = {
   avg: number
   lower: number
   upper: number
+  curve: ScatterData
+  hlines: ScatterData[]
 }
 
 type MeasurementResults = {
-  insole?: Measurement
-  nominal?: Measurement
-  height?: Measurement
+  insole?: ModelResults
+  nominal?: ModelResults
+  height?: ModelResults
 }
 
 type Results = {
@@ -34,4 +36,9 @@ type LinearModel = {
   n: integer
   sos: number
   xMean: number
+}
+
+type ScatterData = {
+  x: number[]
+  y: number[]
 }
