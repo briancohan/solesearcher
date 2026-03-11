@@ -1,5 +1,4 @@
 import Header from '@/app/server_components/Header'
-import Rating from '@/app/server_components/Rating'
 
 export const metadata = {
   title: 'About - Sole Searcher',

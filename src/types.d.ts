@@ -11,11 +11,11 @@ type MeasurementResults = {
   nominal?: ModelResults
   height?: ModelResults
 }
+type MeasurementKey = keyof MeasurementResults
 
 type Results = {
   shoe: MeasurementResults
   foot: MeasurementResults
-  best: 'insole' | 'nominal' | 'height'
 }
 
 type Classification = "Men's - US" | "Women's - US" | 'Youth - US' | 'Child - US' | 'European'
@@ -41,4 +41,9 @@ type LinearModel = {
 type ScatterData = {
   x: number[]
   y: number[]
+}
+
+type Point = {
+  x: number
+  y: number
 }

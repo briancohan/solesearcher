@@ -6,7 +6,6 @@ import { usePathname, useSearchParams } from 'next/navigation'
 
 import Button from '@/app/server_components/Button'
 import Header from '@/app/server_components/Header'
-import Rating from '@/app/server_components/Rating'
 import DataCard from '@/components/DataCard'
 import Input from '@/components/Input'
 import InputVariable from '@/components/InputVariable'
@@ -80,7 +79,7 @@ export default function Home() {
   const [heightUnit, setHeightUnit] = useLocalStorage<unit>('heightUnit', 'mm')
   const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
 
-  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {}, best: 'insole' } as Results)
+  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {} } as Results)
 
   const pathname = usePathname()
 
@@ -188,18 +187,8 @@ export default function Home() {
         Track Lengths
       </Header>
       <div className='grid items-start max-w-3xl grid-cols-1 gap-5 mx-auto mt-5 sm:grid-cols-2'>
-        <DataCard
-          best={measurements.best}
-          results={measurements.shoe}
-          title='Shoeprint Length'
-          icon='mingcute:shoe-line'
-        />
-        <DataCard
-          best={measurements.best}
-          results={measurements.foot}
-          title='Footprint Length'
-          icon='icon-park-outline:foot'
-        />
+        <DataCard results={measurements.shoe} title='Shoeprint Length' icon='mingcute:shoe-line' />
+        <DataCard results={measurements.foot} title='Footprint Length' icon='icon-park-outline:foot' />
       </div>
 
       <div className='flex flex-col max-w-2xl gap-6 px-4 py-5 mx-auto sm:px-6'>
@@ -207,21 +196,16 @@ export default function Home() {
           Measuring Track and Insole Lengths
         </Header>
         <p>
-          Shoeprint, footprint, and sole measurements should be made at the point where
-          the vertical aspect of the slope meets or exceeds the horizontal aspect.
-
+          Shoeprint, footprint, and sole measurements should be made at the point where the vertical aspect of the slope
+          meets or exceeds the horizontal aspect.
         </p>
         <p>
-          For shoeprints made with outsoles that have vertical walls, this will be the edge of the shoeprint.
-          For footprints and shoeprints made with outsoles that have curved edges, this is where the slope is 45<sup>&deg;</sup>.
+          For shoeprints made with outsoles that have vertical walls, this will be the edge of the shoeprint. For
+          footprints and shoeprints made with outsoles that have curved edges, this is where the slope is 45
+          <sup>&deg;</sup>.
         </p>
         <div className='mx-auto'>
-          <svg
-            width="full"
-            viewBox='0 0 200 175'
-            fill='none'
-            xmlns='http://www.w3.org/2000/svg'
-            stroke='white'>
+          <svg width='full' viewBox='0 0 200 175' fill='none' xmlns='http://www.w3.org/2000/svg' stroke='white'>
             <path
               d='M120.549 119.851C120.241 119.851 119.933 119.851 119.625 119.851C101.547 119.758 95.5383 116.361 92.3028 114.547C91.5324 114.128 90.8648 113.756 90.5566 113.756C89.4781 113.849 87.3725 114.872 85.4209 115.85C82.8017 117.152 80.0284 118.502 77.6146 118.874C72.9925 119.619 46.5436 118.967 40.0726 117.385C32.8312 115.617 31.1364 111.057 31.0851 110.871C30.9824 110.638 30.9824 110.405 31.0337 110.173L34.0638 97.5165C34.1665 97.1442 34.4233 96.8185 34.8341 96.6324C35.245 96.4463 35.6559 96.4463 36.0667 96.5859C36.1694 96.6324 48.3411 101.472 57.1745 100.96C66.162 100.448 82.8017 95.4226 82.9558 95.3761C83.2639 95.283 83.5207 95.283 83.8289 95.3761C84.2397 95.4691 126.507 106.776 139.962 106.776C153.11 106.776 167.592 97.0046 167.695 96.9116C168.055 96.6789 168.517 96.5859 168.979 96.6789C169.441 96.772 169.749 97.0977 169.955 97.4699C170.058 97.7026 172.214 102.914 168.106 108.777C163.689 115.152 143.352 119.851 120.549 119.851ZM90.6594 111.15C91.7892 111.15 92.7136 111.662 93.8949 112.313C96.8736 113.988 102.472 117.106 119.676 117.199C143.763 117.339 162.303 112.22 165.692 107.427C167.746 104.543 167.901 101.89 167.695 100.215C163.227 102.961 151.415 109.428 140.014 109.428C126.763 109.428 88.2969 99.3312 83.5207 98.0283C80.7474 98.8659 66.0593 103.147 57.4313 103.612C49.8304 104.031 40.3294 101.006 36.5803 99.6569L34.0124 110.359C34.4747 111.196 36.1694 113.709 40.8429 114.872C47.3139 116.408 73.3007 116.873 77.1524 116.315C79.104 115.989 81.7746 114.733 84.0857 113.57C86.5508 112.36 88.6564 111.336 90.3512 111.15C90.4026 111.15 90.5567 111.15 90.6594 111.15Z'
               fill='black'

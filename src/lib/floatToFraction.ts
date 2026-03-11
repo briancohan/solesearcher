@@ -18,5 +18,4 @@ const floatToFraction = (value: number, denominator = 16): Fraction => {
 
   return { whole, numerator, denominator }
 }
-
 export default floatToFraction
