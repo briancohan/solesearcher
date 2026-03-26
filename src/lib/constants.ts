@@ -20,3 +20,9 @@ export const line_dash: { [id: string]: any } = {
   nominal: 'dot',
   height: 'solid',
 }
+
+export const classifications: Classification[] = ['European', "Men's - US", "Women's - US", 'Youth - US', 'Child - US']
+
+export const sexes: Sex[] = ['Female', 'Male']
+
+export const unitSystems: UnitSystem[] = ['Metric', 'Imperial']

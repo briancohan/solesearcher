@@ -12,12 +12,9 @@ import InputVariable from '@/components/InputVariable'
 import Select from '@/components/Select'
 import ShareButton from '@/components/ShareButton'
 import UnitHelper from '@/components/UnitHelper'
-import calculateMeasurements from '@/lib/calcs'
-import convert from '@/lib/convert'
+import calculateMeasurements, { convert } from '@/lib/calcs'
+import { classifications, sexes, unitSystems } from '@/lib/constants'
 import useLocalStorage from '@/lib/hooks/useLocalStorage'
-
-const classifications: Classification[] = ['European', "Men's - US", "Women's - US", 'Youth - US', 'Child - US']
-const sexes: Sex[] = ['Male', 'Female']
 
 // Component to handle search params with proper Suspense boundary
 function SearchParamsHandler({
@@ -68,18 +65,20 @@ function SearchParamsHandler({
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {} } as Results)
 
+  // Insole Data
   const [insole, setInsole] = useLocalStorage<number>('insole', 276)
   const [insoleUnit, setInsoleUnit] = useLocalStorage<unit>('insoleUnit', 'mm')
-
+  // Shoe Size Data
   const [nominal, setNominal] = useLocalStorage<number>('nominal', 45)
   const [classification, setClassification] = useLocalStorage<Classification>('classification', classifications[0])
-
+  // Height Data
   const [height, setHeight] = useLocalStorage<number>('height', 1828)
   const [heightUnit, setHeightUnit] = useLocalStorage<unit>('heightUnit', 'mm')
   const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
-
-  const [measurements, setMeasurements] = useState<Results>({ shoe: {}, foot: {} } as Results)
+  // Output Options
+  const [unitSystem, setUnitSystem] = useLocalStorage<UnitSystem>('unitSystem', unitSystems[0])
 
   const pathname = usePathname()
 
@@ -144,6 +143,9 @@ export default function Home() {
             }}
           />
         </div>
+        <Header as='h2' className='text-3xl text-center'>
+          Subject Information
+        </Header>
         <div>
           <InputVariable
             name='insole'
@@ -186,9 +188,29 @@ export default function Home() {
       <Header as='h2' className='text-3xl text-center'>
         Track Lengths
       </Header>
+      <div className='flex-col max-w-full gap-6 px-4 py-5 mx-auto md:max-w-xs lex sm:px-6'>
+        <Select
+          name='units'
+          label='Output Units'
+          options={unitSystems}
+          value={mounted ? unitSystem : unitSystems[0]}
+          onChange={setUnitSystem}
+          className='min-w-lg'
+        />
+      </div>
       <div className='grid items-start max-w-3xl grid-cols-1 gap-5 mx-auto mt-5 sm:grid-cols-2'>
-        <DataCard results={measurements.shoe} title='Shoeprint Length' icon='mingcute:shoe-line' />
-        <DataCard results={measurements.foot} title='Footprint Length' icon='icon-park-outline:foot' />
+        <DataCard
+          results={measurements.shoe}
+          title='Shoeprint Length'
+          icon='mingcute:shoe-line'
+          unitSystem={unitSystem}
+        />
+        <DataCard
+          results={measurements.foot}
+          title='Footprint Length'
+          icon='icon-park-outline:foot'
+          unitSystem={unitSystem}
+        />
       </div>
 
       <div className='flex flex-col max-w-2xl gap-6 px-4 py-5 mx-auto sm:px-6'>

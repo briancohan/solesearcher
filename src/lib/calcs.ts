@@ -34,7 +34,7 @@ export default function calculateMeasurements(
   return returnObj
 }
 
-function linspace(start: number, stop: number, numPoints: number): number[] {
+export function linspace(start: number, stop: number, numPoints: number): number[] {
   // Validate input types
   if (typeof start !== 'number' || typeof stop !== 'number') {
     throw new TypeError('start and stop must be numbers')
@@ -69,6 +69,27 @@ export function normalCurve(
   var x = linspace(xmin, xmax, nPoints)
   var y = x.map((x) => normal(x, mu, sigma))
   return { x, y }
+}
+
+export function convert(value: number, from: unit, to: unit) {
+  const factors = {
+    mm: {
+      mm: 1,
+      cm: 0.1,
+      in: 0.03937,
+    },
+    cm: {
+      mm: 10,
+      cm: 1,
+      in: 0.3937,
+    },
+    in: {
+      mm: 25.4,
+      cm: 2.54,
+      in: 1,
+    },
+  }
+  return value * factors[from][to]
 }
 
 function modelPrediction(value: number, model: LinearModel): ModelResults {

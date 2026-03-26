@@ -2,11 +2,12 @@ import { Annotations, Config, Layout, PlotData } from 'plotly.js'
 
 import dynamic from 'next/dynamic'
 
+import { convert, linspace } from '@/lib/calcs'
 import { curvePoints, hue, legend_text, line_dash, startLevel, startSaturation } from '@/lib/constants'
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
 
-const graphData = (data: MeasurementResults): Partial<PlotData>[] => {
+const graphData = (data: MeasurementResults, unitSystem: UnitSystem): Partial<PlotData>[] => {
   var output: Partial<PlotData>[] = []
   var min_coord: Point = { x: +1000, y: 0 }
   var max_coord: Point = { x: -1000, y: 0 }
@@ -69,76 +70,75 @@ const graphData = (data: MeasurementResults): Partial<PlotData>[] => {
     })
   }
 
-  // Lines for min/max data bounds
-  Array(min_coord, max_coord).forEach((point) => {
-    output.push({
-      x: [point.x, point.x],
-      y: [0, point.y],
-      type: 'scatter',
-      mode: 'lines',
-      showlegend: false,
-      line: {
-        color: 'white',
-        width: 5,
-      },
-    })
-  })
-  output.push({
-    x: [min_coord.x, max_coord.x],
-    y: [0, 0],
-    type: 'scatter',
-    mode: 'lines',
-    showlegend: false,
-    line: {
-      color: 'white',
-      width: 2,
-    },
-  })
-
   return output
 }
 
-const graphLayout = (data: MeasurementResults): Partial<Layout> => {
+const bounds = (data: MeasurementResults) => {
   var xmin = Math.min(...Object.values(data).map((i) => Math.min(...i.curve.x)))
   var xmax = Math.max(...Object.values(data).map((i) => Math.max(...i.curve.x)))
   var ymin = Math.min(...Object.values(data).map((i) => Math.min(...i.curve.y)))
   var ymax = Math.max(...Object.values(data).map((i) => Math.max(...i.curve.y)))
-  const yRnagePadding: number = 0.01
+  return { xmin, xmax, ymin, ymax }
+}
 
-  // Show extents of data on graph
-  let annotations: Array<Partial<Annotations>> = []
-  Array(xmin, xmax).forEach((xval) => {
-    annotations.push({
-      x: xval,
-      xanchor: 'auto',
-      xref: 'x',
-      y: 0,
-      yanchor: 'top',
-      yref: 'y',
-      yshift: -5,
-      showarrow: false,
-      font: { color: 'white', size: 14 },
-      text: Math.round(xval).toString(),
-    })
-  })
+const modRanges = (minVal: number, maxVal: number, modulo: number) => {
+  return [minVal - (minVal % modulo), maxVal + modulo - (maxVal % modulo)]
+}
+
+const padRanges = (minVal: number, maxVal: number, percent: number) => {
+  var padding = ((maxVal - minVal) * percent) / 100
+  return [minVal - padding, maxVal + padding]
+}
+
+const range = (start: number, stop: number, length: number) => {
+  var step = (stop - start) / length
+  return Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step)
+}
+
+const xticks = (minVal: number, maxVal: number, unitSystem: UnitSystem): TickInfo => {
+  var tickUnit: unit = unitSystem == 'Metric' ? 'cm' : 'in'
+  var dispUnit: unit = unitSystem == 'Metric' ? 'mm' : 'in'
+  var modulo: number = unitSystem == 'Metric' ? 1 : 0.5
+
+  var [minimum, maximum] = modRanges(convert(minVal, 'mm', tickUnit), convert(maxVal, 'mm', tickUnit), modulo)
+
+  var intervals = (maximum - minimum) / modulo
+  if (intervals < 4) {
+    intervals = intervals * 2
+  }
+  if (intervals > 7) {
+    intervals = intervals / 2
+  }
+
+  var tickvals = range(minimum, maximum, intervals)
+
+  return {
+    range: [convert(minimum, tickUnit, 'mm') - 1, convert(maximum, tickUnit, 'mm') + 1],
+    tickvals: tickvals.map((i) => convert(i, tickUnit, 'mm')),
+    ticktext: tickvals.map((tick) => convert(tick, tickUnit, dispUnit).toString()),
+  }
+}
+
+const graphLayout = (data: MeasurementResults, unitSystem: UnitSystem): Partial<Layout> => {
+  const { xmin, xmax, ymax } = bounds(data)
 
   return {
     paper_bgcolor: 'rgba(0,0,0,0)',
     plot_bgcolor: 'rgba(0,0,0,0)',
     font: {
       color: '#CABC9E',
+      size: 16,
+      weight: 600,
     },
     xaxis: {
-      dtick: 10,
       gridcolor: '#666',
-      title: { text: 'Predicted Ranges - mm' },
-      range: [xmin - (xmin % 10) - 1, xmax + 10 - (xmax % 10) + 1],
       ticklabelstandoff: -15,
+      ...xticks(xmin, xmax, unitSystem),
     },
     yaxis: {
       showgrid: false,
       visible: false,
-      range: [-yRnagePadding, ymax + yRnagePadding],
+      range: padRanges(0, ymax, 15),
     },
     legend: {
       orientation: 'h',
@@ -149,17 +149,16 @@ const graphLayout = (data: MeasurementResults): Partial<Layout> => {
       yref: 'paper',
       yanchor: 'bottom',
       entrywidthmode: 'fraction',
-      entrywidth: 0.3,
+      entrywidth: 0.32,
     },
     height: 300,
     margin: {
       l: 20,
       r: 20,
       t: 40,
-      b: 70,
+      b: 40,
       pad: 20,
     },
-    annotations,
     autosize: true,
   }
 }
@@ -171,9 +170,17 @@ const graphConfig: Partial<Config> = {
 
 interface TrackLengthGraphProps {
   data: MeasurementResults
+  unitSystem: UnitSystem
 }
-const TrackLengthGraph: React.FC<TrackLengthGraphProps> = ({ data }) => {
-  return <Plot data={graphData(data)} layout={graphLayout(data)} config={graphConfig} className='w-full' />
+const TrackLengthGraph: React.FC<TrackLengthGraphProps> = ({ data, unitSystem }) => {
+  return (
+    <Plot
+      data={graphData(data, unitSystem)}
+      layout={graphLayout(data, unitSystem)}
+      config={graphConfig}
+      className='w-full'
+    />
+  )
 }
 
 export default TrackLengthGraph

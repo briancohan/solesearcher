@@ -20,6 +20,7 @@ type Results = {
 
 type Classification = "Men's - US" | "Women's - US" | 'Youth - US' | 'Child - US' | 'European'
 type Sex = 'Male' | 'Female'
+type UnitSystem = 'Metric' | 'Imperial'
 
 type Fraction = {
   whole: number
@@ -46,4 +47,10 @@ type ScatterData = {
 type Point = {
   x: number
   y: number
+}
+
+type TickInfo = {
+  tickvals?: number[]
+  ticktext?: string[]
+  range: number[]
 }
