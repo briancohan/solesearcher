@@ -1,9 +1,29 @@
-import { Annotations, Config, Layout, PlotData } from 'plotly.js'
+import {
+  Config,
+  Layout as PlotlyLayout,
+  LayoutAxis as PlotlyLayoutAxis,
+  Legend as PlotlyLegend,
+  PlotData,
+} from 'plotly.js'
 
 import dynamic from 'next/dynamic'
 
-import { convert, linspace } from '@/lib/calcs'
+import { convert } from '@/lib/calcs'
 import { curvePoints, hue, legend_text, line_dash, startLevel, startSaturation } from '@/lib/constants'
+
+interface Legend extends PlotlyLegend {
+  entrywidthmode: 'fraction' | 'pixels'
+  entrywidth: number
+}
+
+interface LayoutAxis extends PlotlyLayoutAxis {
+  ticklabelstandoff: number
+}
+
+interface Layout extends PlotlyLayout {
+  legend: Partial<Legend>
+  xaxis: Partial<LayoutAxis>
+}
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
 
