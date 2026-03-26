@@ -77,6 +77,9 @@ export default function Home() {
   const [height, setHeight] = useLocalStorage<number>('height', 1828)
   const [heightUnit, setHeightUnit] = useLocalStorage<unit>('heightUnit', 'mm')
   const [sex, setSex] = useLocalStorage<Sex>('sex', sexes[0])
+  // Known Track
+  const [track, setTrack] = useLocalStorage<number>('track', 0)
+  const [trackUnit, setTrackUnit] = useLocalStorage<unit>('trackUnit', 'mm')
   // Output Options
   const [unitSystem, setUnitSystem] = useLocalStorage<UnitSystem>('unitSystem', unitSystems[0])
 
@@ -186,30 +189,44 @@ export default function Home() {
       </form>
 
       <Header as='h2' className='text-3xl text-center'>
-        Track Lengths
+        Output Options
       </Header>
-      <div className='flex-col max-w-full gap-6 px-4 py-5 mx-auto md:max-w-xs lex sm:px-6'>
-        <Select
-          name='units'
-          label='Output Units'
-          options={unitSystems}
-          value={mounted ? unitSystem : unitSystems[0]}
-          onChange={setUnitSystem}
-          className='min-w-lg'
-        />
-      </div>
+      <form className='flex flex-col max-w-3xl gap-6 px-4 py-5 mx-auto sm:px-6'>
+        <div className='grid items-end grid-cols-2 gap-6'>
+          <InputVariable
+            name='track'
+            inputValue={track}
+            onInputChange={setTrack}
+            selectValue={trackUnit}
+            onSelectChange={setTrackUnit}
+            label={
+              <div className='flex flex-col items-start gap-2 sm:items-center sm:flex-row'>Known Track Length</div>
+            }
+          />
+          <Select
+            name='units'
+            label='Output Units'
+            options={unitSystems}
+            value={mounted ? unitSystem : unitSystems[0]}
+            onChange={setUnitSystem}
+            className='min-w-lg'
+          />
+        </div>
+      </form>
       <div className='grid items-start max-w-3xl grid-cols-1 gap-5 mx-auto mt-5 sm:grid-cols-2'>
         <DataCard
           results={measurements.shoe}
           title='Shoeprint Length'
           icon='mingcute:shoe-line'
           unitSystem={unitSystem}
+          track={convert(track, trackUnit, 'mm')}
         />
         <DataCard
           results={measurements.foot}
           title='Footprint Length'
           icon='icon-park-outline:foot'
           unitSystem={unitSystem}
+          track={convert(track, trackUnit, 'mm')}
         />
       </div>
 

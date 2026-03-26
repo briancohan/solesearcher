@@ -54,3 +54,5 @@ type TickInfo = {
   ticktext?: string[]
   range: number[]
 }
+
+type xanchor = 'left' | 'center' | 'right' | 'auto' | undefined

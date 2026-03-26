@@ -19,9 +19,10 @@ interface DataCardProps {
   title: string
   results: MeasurementResults
   unitSystem: UnitSystem
+  track: number
 }
 
-const DataCard: React.FC<DataCardProps> = ({ icon, title, results, unitSystem }) => {
+const DataCard: React.FC<DataCardProps> = ({ icon, title, results, unitSystem, track }) => {
   return (
     <div className='relative flex flex-col gap-8 px-4 py-5 overflow-hidden rounded-lg shadow shadow-zinc-600 bg-zinc-700 sm:px-6 sm:pt-6'>
       <div className='flex flex-row items-center h-16'>
@@ -82,7 +83,7 @@ const DataCard: React.FC<DataCardProps> = ({ icon, title, results, unitSystem })
 
       <div>
         <p className='text-lg text-center text-sole-tan'>Probabilty Distribution</p>
-        <TrackLengthCurve data={results} unitSystem={unitSystem} />
+        <TrackLengthCurve data={results} unitSystem={unitSystem} track={track} />
       </div>
     </div>
   )

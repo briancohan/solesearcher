@@ -1,4 +1,5 @@
 import {
+  Annotations,
   Config,
   Layout as PlotlyLayout,
   LayoutAxis as PlotlyLayoutAxis,
@@ -27,7 +28,7 @@ interface Layout extends PlotlyLayout {
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false })
 
-const graphData = (data: MeasurementResults, unitSystem: UnitSystem): Partial<PlotData>[] => {
+const graphData = (data: MeasurementResults, track: number): Partial<PlotData>[] => {
   var output: Partial<PlotData>[] = []
   var min_coord: Point = { x: +1000, y: 0 }
   var max_coord: Point = { x: -1000, y: 0 }
@@ -90,6 +91,19 @@ const graphData = (data: MeasurementResults, unitSystem: UnitSystem): Partial<Pl
     })
   }
 
+  // Known Track
+  output.push({
+    x: [track, track],
+    y: [-1, 1],
+    type: 'scatter',
+    mode: 'lines',
+    showlegend: false,
+    line: {
+      color: 'white',
+      width: 2,
+    },
+  })
+
   return output
 }
 
@@ -139,8 +153,30 @@ const xticks = (minVal: number, maxVal: number, unitSystem: UnitSystem): TickInf
   }
 }
 
-const graphLayout = (data: MeasurementResults, unitSystem: UnitSystem): Partial<Layout> => {
+const graphLayout = (data: MeasurementResults, track: number, unitSystem: UnitSystem): Partial<Layout> => {
   const { xmin, xmax, ymax } = bounds(data)
+  var annotations: Partial<Annotations>[] = []
+
+  if (xmin < track || track < xmax) {
+    var anchor_right: boolean = (xmax - track) / (xmax - xmin) < 0.4
+
+    var xanchor: xanchor = anchor_right ? 'right' : 'left'
+    var xshift: number = anchor_right ? -5 : 5
+
+    annotations.push({
+      text: 'Known Track',
+      x: track,
+      xref: 'x',
+      xanchor: xanchor,
+      xshift: xshift,
+      y: 0,
+      yref: 'y',
+      yanchor: 'top',
+      yshift: -10,
+      showarrow: false,
+      font: { color: 'white' },
+    })
+  }
 
   return {
     paper_bgcolor: 'rgba(0,0,0,0)',
@@ -179,6 +215,7 @@ const graphLayout = (data: MeasurementResults, unitSystem: UnitSystem): Partial<
       b: 40,
       pad: 20,
     },
+    annotations: annotations,
     autosize: true,
   }
 }
@@ -191,12 +228,13 @@ const graphConfig: Partial<Config> = {
 interface TrackLengthGraphProps {
   data: MeasurementResults
   unitSystem: UnitSystem
+  track: number
 }
-const TrackLengthGraph: React.FC<TrackLengthGraphProps> = ({ data, unitSystem }) => {
+const TrackLengthGraph: React.FC<TrackLengthGraphProps> = ({ data, unitSystem, track }) => {
   return (
     <Plot
-      data={graphData(data, unitSystem)}
-      layout={graphLayout(data, unitSystem)}
+      data={graphData(data, track)}
+      layout={graphLayout(data, track, unitSystem)}
       config={graphConfig}
       className='w-full'
     />
