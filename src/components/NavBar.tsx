@@ -1,7 +1,7 @@
 'use client'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 import { usePathname } from 'next/navigation'
 

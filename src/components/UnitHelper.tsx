@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 import Button from '@/app/server_components/Button'
 import floatToFraction from '@/lib/floatToFraction'

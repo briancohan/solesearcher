@@ -1,5 +1,5 @@
 import { Dispatch } from 'react'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
 import Label from '@/app/server_components/Label'
