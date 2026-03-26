@@ -80,6 +80,56 @@ export default function About() {
       </p>
 
       <Header as='h2' className='text-2xl'>
+        Disclaimer
+      </Header>
+      <p>
+        Data used to train and validate prediction models were gathered from convenience and snowball sampling methods.
+        As a result of no random sampling techniques, these results are not generalizable to any population, specific or
+        general. Data measurements were made by one person; inter-observer error has not been described, and will likely
+        vary more (have larger errors and wider prediction intervals) than these results.
+      </p>
+      <p>
+        These prediction intervals are not indicative of identification, but likelihood that a missing person COULD HAVE
+        MADE a particular footprint or shoeprint (tracks), and associated uncertainty. In other words, just because a
+        track length falls within the prediction intervals for the missing person, that does NOT mean that the missing
+        person made that track. These intervals do describe the probability that a person exhibiting the characteristics
+        entered into the app could have made a track with a certain length. These results are intended to be used as a
+        guide to assess relevance of footprints or shoeprints to a missing person search. It is important to employ
+        multiple-factor reasoning (including track age, gait pattern, subject mobility, footwear information,
+        accompanying tracks, and other factors) when assessing footprint or shoeprint relevance to a missing person
+        scenario.
+      </p>
+      <p>
+        This app assumes that a full track length is measurable - some incomplete track lengths can be estimated, but
+        the resulting predictions are less applicable to track length estimates.
+      </p>
+      <p>
+        If footwear is labeled as Men&apos;s or Women&apos;s, those categories are used in this app, as well as European
+        sizes. Due to a variety of terms used to describe U.S. sub-adult shoe size categories (e.g., kids, child, youth,
+        junior, boys, girls, toddler), this app condenses them into two categories - Child and Youth - by these
+        criteria:
+      </p>
+      <p>Sizes 1 to 8 outsole length less than 200mm (8 inches) are categorized as Child&apos;s.</p>
+      <p>Sizes 1 to 8 footwear with outsole lengths greater than 200mm (8 inches) are categorized as Youth.</p>
+      <p>
+        Footwear sized 8 ½ to 13 ½ with outsole length less than 240mm (9 ½ inches) are categorized as Child&apos;s.
+      </p>
+      <p>Footwear sized 8 ½ to 13 ½ with outsole length greater than 240mm (9 ½ inches) are categorized as Youth.</p>
+      <div className='grid max-w-2xl grid-cols-3 gap-6 py-8 mx-auto text-center'>
+        <div>Nominal Size</div>
+        <div>Child</div>
+        <div>Youth</div>
+
+        <div>1 - 8</div>
+        <div>&lt; 200 mm / &lt; 8 in</div>
+        <div>&gt; 200 mm / &gt; 8 in</div>
+
+        <div>8.5 - 13.5</div>
+        <div>&lt; 240 mm / &lt; 9.5 in</div>
+        <div>&gt; 240 mm / &gt; 9.5 in</div>
+      </div>
+
+      <Header as='h2' className='text-2xl'>
         Credits
       </Header>
       <table className='table-auto'>
