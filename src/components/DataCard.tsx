@@ -32,7 +32,7 @@ const DataCard: React.FC<DataCardProps> = ({ icon, title, results, unitSystem, t
         <p className='ml-16 text-2xl truncate font-medum text-sole-tan'>
           {title}
           <br />
-          <span className='text-xl'>in {unitSystem == 'Metric' ? 'Milimeters' : 'Inches'}</span>
+          <span className='text-xl'>in {unitSystem == 'Metric' ? 'Millimeters' : 'Inches'}</span>
         </p>
       </div>
 
