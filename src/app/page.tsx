@@ -108,6 +108,8 @@ export default function Home() {
     setHeight(0)
     setHeightUnit('mm')
     setSex(sexes[0])
+    setTrack(0)
+    setTrackUnit('mm')
   }
 
   return (
