@@ -70,6 +70,31 @@ export default function About() {
         Indicate nominal size in whole or half-size increments. Make sure to set the correct footwear size type:
         European, Men&apos;s, Women&apos;s, Youth, or Child.
       </p>
+      <p>
+        If footwear is labeled as Men&apos;s or Women&apos;s, those categories are used in this app, as well as European
+        sizes. Due to a variety of terms used to describe U.S. sub-adult shoe size categories (e.g., kids, child, youth,
+        junior, boys, girls, toddler), this app condenses them into two categories - Child and Youth - by these
+        criteria:
+      </p>
+      <p>Sizes 1 to 8 outsole length less than 200mm (8 inches) are categorized as Child&apos;s.</p>
+      <p>Sizes 1 to 8 footwear with outsole lengths greater than 200mm (8 inches) are categorized as Youth.</p>
+      <p>
+        Footwear sized 8 ½ to 13 ½ with outsole length less than 240mm (9 ½ inches) are categorized as Child&apos;s.
+      </p>
+      <p>Footwear sized 8 ½ to 13 ½ with outsole length greater than 240mm (9 ½ inches) are categorized as Youth.</p>
+      <div className='grid max-w-2xl grid-cols-3 gap-6 py-8 mx-auto text-center'>
+        <div>Nominal Size</div>
+        <div>Child</div>
+        <div>Youth</div>
+
+        <div>1 - 8</div>
+        <div>&lt; 200 mm / &lt; 8 in</div>
+        <div>&gt; 200 mm / &gt; 8 in</div>
+
+        <div>8.5 - 13.5</div>
+        <div>&lt; 240 mm / &lt; 9.5 in</div>
+        <div>&gt; 240 mm / &gt; 9.5 in</div>
+      </div>
 
       <Header as='h3' className='flex items-center gap-2'>
         Subject Height
@@ -103,32 +128,6 @@ export default function About() {
         This app assumes that a full track length is measurable - some incomplete track lengths can be estimated, but
         the resulting predictions are less applicable to track length estimates.
       </p>
-      <p>
-        If footwear is labeled as Men&apos;s or Women&apos;s, those categories are used in this app, as well as European
-        sizes. Due to a variety of terms used to describe U.S. sub-adult shoe size categories (e.g., kids, child, youth,
-        junior, boys, girls, toddler), this app condenses them into two categories - Child and Youth - by these
-        criteria:
-      </p>
-      <p>Sizes 1 to 8 outsole length less than 200mm (8 inches) are categorized as Child&apos;s.</p>
-      <p>Sizes 1 to 8 footwear with outsole lengths greater than 200mm (8 inches) are categorized as Youth.</p>
-      <p>
-        Footwear sized 8 ½ to 13 ½ with outsole length less than 240mm (9 ½ inches) are categorized as Child&apos;s.
-      </p>
-      <p>Footwear sized 8 ½ to 13 ½ with outsole length greater than 240mm (9 ½ inches) are categorized as Youth.</p>
-      <div className='grid max-w-2xl grid-cols-3 gap-6 py-8 mx-auto text-center'>
-        <div>Nominal Size</div>
-        <div>Child</div>
-        <div>Youth</div>
-
-        <div>1 - 8</div>
-        <div>&lt; 200 mm / &lt; 8 in</div>
-        <div>&gt; 200 mm / &gt; 8 in</div>
-
-        <div>8.5 - 13.5</div>
-        <div>&lt; 240 mm / &lt; 9.5 in</div>
-        <div>&gt; 240 mm / &gt; 9.5 in</div>
-      </div>
-
       <Header as='h2' className='text-2xl'>
         Credits
       </Header>
