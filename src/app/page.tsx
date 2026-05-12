@@ -101,15 +101,17 @@ export default function Home() {
   }, [])
 
   function resetForm() {
-    setInsole(0)
-    setInsoleUnit('mm')
-    setNominal(0)
-    setClassification(classifications[0])
-    setHeight(0)
-    setHeightUnit('mm')
-    setSex(sexes[0])
-    setTrack(0)
-    setTrackUnit('mm')
+    setInsole('')
+    setNominal('')
+    setHeight('')
+    setTrack('')
+    
+    // setInsoleUnit('mm')
+    // setHeightUnit('mm')
+    // setTrackUnit('mm')
+    
+    // setClassification(classifications[0])
+    // setSex(sexes[0])
   }
 
   return (
@@ -138,11 +140,11 @@ export default function Home() {
           <ShareButton
             url={typeof window !== 'undefined' ? window.location.origin + pathname : ''}
             data={{
-              insole: insole.toString(),
+              insole: insole,
               insoleUnit,
-              nominal: nominal.toString(),
+              nominal: nominal,
               classification,
-              height: height.toString(),
+              height: height,
               heightUnit,
               sex,
             }}

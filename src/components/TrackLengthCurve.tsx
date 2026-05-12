@@ -209,7 +209,7 @@ const graphLayout = (data: MeasurementResults, track: number, unitSystem: UnitSy
     },
     height: 300,
     margin: {
-      l: 20,
+      l: 70,
       r: 20,
       t: 40,
       b: 40,
