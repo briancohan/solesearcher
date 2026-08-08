@@ -105,11 +105,11 @@ export default function Home() {
     setNominal('')
     setHeight('')
     setTrack('')
-    
+
     // setInsoleUnit('mm')
     // setHeightUnit('mm')
     // setTrackUnit('mm')
-    
+
     // setClassification(classifications[0])
     // setSex(sexes[0])
   }

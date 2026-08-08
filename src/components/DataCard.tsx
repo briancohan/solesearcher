@@ -42,8 +42,9 @@ const DataCard: React.FC<DataCardProps> = ({ icon, title, results, unitSystem, t
           <thead className='text-zinc-300'>
             <tr>
               <td className='m2'></td>
-              <td className='m2'>Average</td>
-              <td className='m2'>95% Range</td>
+              <td className='m2'>95% Min</td>
+              <td className='m2 text-lg font-bold'>Average</td>
+              <td className='m2'>95% Max</td>
             </tr>
           </thead>
           <tbody>
@@ -51,28 +52,23 @@ const DataCard: React.FC<DataCardProps> = ({ icon, title, results, unitSystem, t
               const typedKey = key as keyof MeasurementResults
               return (
                 <tr key={key}>
-                  <td
-                    className='font-bold tracking-wider text-left m2'
-                    style={{ color: hslToHex(hue[typedKey] ?? 0, 75, 70) }}>
+                  <td className='m2' style={{ color: hslToHex(hue[typedKey] ?? 0, 75, 70) }}>
                     {legend_text[typedKey]}
                   </td>
-                  <td className='m2' style={{ color: hslToHex(hue[typedKey] ?? 0, 75, 70) }}>
+                  <td className='m2'>
+                    {unitSystem == 'Metric'
+                      ? Math.round(value.lower)
+                      : fractionToHTML(floatToFraction(convert(value.lower, 'mm', 'in')))}
+                  </td>
+                  <td className='m2 text-lg font-bold' style={{ color: hslToHex(hue[typedKey] ?? 0, 75, 70) }}>
                     {unitSystem == 'Metric'
                       ? Math.round(value.avg)
                       : fractionToHTML(floatToFraction(convert(value.avg, 'mm', 'in')))}
                   </td>
-                  <td className='grid grid-cols-[4fr_1fr_4fr] m2'>
-                    <span className='text-center'>
-                      {unitSystem == 'Metric'
-                        ? Math.round(value.lower)
-                        : fractionToHTML(floatToFraction(convert(value.lower, 'mm', 'in')))}
-                    </span>
-                    <span>&#8596;</span>
-                    <span className='text-center'>
-                      {unitSystem == 'Metric'
-                        ? Math.round(value.upper)
-                        : fractionToHTML(floatToFraction(convert(value.upper, 'mm', 'in')))}
-                    </span>
+                  <td className='m2'>
+                    {unitSystem == 'Metric'
+                      ? Math.round(value.upper)
+                      : fractionToHTML(floatToFraction(convert(value.upper, 'mm', 'in')))}
                   </td>
                 </tr>
               )
